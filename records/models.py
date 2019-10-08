@@ -16,9 +16,13 @@ class Student(models.Model):
     lesson_weekday = models.IntegerField(blank=True, null=True)  # 0 = Monday
     lesson_time = models.TimeField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
+    
 class Lesson(models.Model):
     teacher = models.ForeignKey(User, related_name="records_lessons", on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name="records_lessons", on_delete=models.CASCADE)
@@ -26,5 +30,8 @@ class Lesson(models.Model):
     end_at = models.DateTimeField()
     notes = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ['start_at']
+        
     def __str__(self):
         return "{} {} to {}".format(self.student, format_lesson_time(self.start_at), format_lesson_time(self.end_at))
