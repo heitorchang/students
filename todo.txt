@@ -3,6 +3,7 @@ Backend
 [  ] handle error codes (400 bad request when making new student)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
+[  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
 
 UI
 [  ] allow blank fields on submit
