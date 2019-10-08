@@ -8,5 +8,10 @@ def index(request):
 
 
 @login_required
-def studentform(request):
-    return render(request, 'ui/studentform.html')
+def studentlist(request):
+    return render(request, 'ui/studentlist.html')
+
+
+@login_required
+def studentdetail(request, pk):
+    return render(request, 'ui/studentdetail.html', {'student_id': pk})

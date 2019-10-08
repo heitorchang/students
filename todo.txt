@@ -1,1 +1,2 @@
 [  ] handle error codes (400 bad request when making new student)
+[  ] toasts/notices after AJAX calls
