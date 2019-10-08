@@ -1,3 +1,17 @@
+Backend
+[  ] create model for notifications
 [  ] handle error codes (400 bad request when making new student)
-[  ] toasts/notices after AJAX calls
+[  ] check for time conflict when adding a class
+[  ] monthly report of classes
+
+UI
 [  ] allow blank fields on submit
+[  ] prev/next link in monthly component bubbles up to root
+[  ] get mm for monthly from $parent, not prop
+[  ] toasts/notices after AJAX calls
+[  ] replace vue js with min version
+[  ] loading spinner
+[  ] block screen while saving JSON
+[  ] add v-cloak to app div
+[  ] hello kitty template
+[  ] hello kitty favicon
