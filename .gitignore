@@ -1,0 +1,23 @@
+# Emacs
+
+*~
+\#*\#
+.\#*
+
+
+# Python
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+
+# Django
+
+secrets.py
+db.sqlite3
+
+# touch these filenames so that they may be tab-completed
+makemigrations
+migrate
+createsuperuser
+runserver
