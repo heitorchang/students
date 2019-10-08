@@ -1,0 +1,85 @@
+{% load static %}
+{% include "ui/header.html" %}
+
+Students:
+<ul>
+  <li v-for="student in students">{student.name}
+  <a :href="'/ui/students/' + student.id + '/'">Edit</a>
+</ul>
+
+<br>
+Lessons:
+<ul>
+  <li v-for="lesson in lessons">{studentDict[lesson.student]} {lesson.notes}
+  <a :href="'/ui/lessons/' + lesson.id + '/'">Edit</a>
+  <button @click="deleteLesson(lesson.id)">Delete {lesson.id}</button>
+</ul>
+
+<br>
+Add Lesson:<br>
+
+{% include "ui/lessonform.html" %}
+<button @click="addLesson">Add</button>
+  
+{% include "ui/commonscripts.html" %}
+
+let vapp = new Vue({
+  delimiters: ['{', '}'],
+
+  el: "#app",
+
+  data: {
+    students: [],
+    studentDict: {},
+    lessons: [],
+    newStudent: "",
+    newStart: "",
+    newEnd: "",
+    newNotes: "",
+  },
+
+  methods: {
+    addLesson() {
+      axios
+        .post('{% url "records:lesson_list" %}',
+              { teacher: {{ request.user.id }},
+                student: this.newStudent,
+                start_at: this.newStart,
+                end_at: this.newEnd,
+                notes: this.newNotes,
+              })
+        .then(response => {
+          console.log(response.data);
+          this.lessons.push(response.data);
+        });
+          
+    },
+    deleteLesson(id) {
+      axios
+        .delete('/records/lessons/' + id + '/')
+        .then(response => {
+          console.log("Delete: " + response.statusText);
+          this.lessons = this.lessons.filter(e => e.id !== id);
+        });
+    }
+
+  },
+  
+  mounted () {
+    axios
+      .get('{% url "records:student_list" %}')
+      .then(response => {
+        console.log("Get student list: " + response.statusText);
+        this.students = response.data;
+        this.students.forEach(s => this.studentDict[s.id] = s.name);
+        axios
+          .get('{% url "records:lesson_list" %}')
+          .then(response => {
+            console.log("Get lesson list: " + response.statusText);
+            this.lessons = response.data;
+          });
+      });
+  }
+});
+
+{% include "ui/footer.html" %}

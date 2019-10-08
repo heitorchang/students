@@ -1,0 +1,33 @@
+{% load static %}
+{% include "ui/header.html" %}
+
+Title<br>
+
+{% include "ui/form.html" %}
+
+
+{% include "ui/commonscripts.html" %}
+
+let vapp = new Vue({
+  delimiters: ['{', '}'],
+
+  el: "#app",
+
+  data: {
+
+  },
+
+  methods: {
+  
+  },
+  
+  mounted () {
+    axios
+      .get('/records/students/' + this.id + '/')
+      .then(response => {
+        console.log("Get: " + response.statusText);
+      });
+  }
+});
+
+{% include "ui/footer.html" %}

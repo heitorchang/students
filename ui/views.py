@@ -15,3 +15,13 @@ def studentlist(request):
 @login_required
 def studentdetail(request, pk):
     return render(request, 'ui/studentdetail.html', {'student_id': pk})
+
+
+@login_required
+def lessonlist(request):
+    return render(request, 'ui/lessonlist.html')
+
+
+@login_required
+def lessondetail(request, pk):
+    return render(request, 'ui/lessondetail.html', {'lesson_id': pk})
