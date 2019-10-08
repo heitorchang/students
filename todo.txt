@@ -7,11 +7,14 @@ Backend
 UI
 [  ] allow blank fields on submit
 [  ] prev/next link in monthly component bubbles up to root
+[  ] Select dropdown for students
 [  ] get mm for monthly from $parent, not prop
 [  ] toasts/notices after AJAX calls
 [  ] replace vue js with min version
 [  ] loading spinner
 [  ] block screen while saving JSON
+
+Display
 [  ] add v-cloak to app div
 [  ] hello kitty template
 [  ] hello kitty favicon

@@ -43,7 +43,7 @@ let vapp = new Vue({
     axios
       .get('/records/students/' + this.id + '/')
       .then(response => {
-        console.log("Get list: " + response.statusText);
+        console.log("Get: " + response.statusText);
         let studentData = response.data;
         this.newName = studentData.name;
         this.newPhone = studentData.phone;

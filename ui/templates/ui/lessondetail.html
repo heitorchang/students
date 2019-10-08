@@ -1,0 +1,54 @@
+{% load static %}
+{% include "ui/header.html" %}
+
+Lesson<br>
+
+{% include "ui/lessonform.html" %}
+
+<button @click="updateLesson">Update</button>
+
+{% include "ui/commonscripts.html" %}
+
+let vapp = new Vue({
+  delimiters: ['{', '}'],
+
+  el: "#app",
+
+  data: {
+    id: {{ lesson_id }},
+    newStudent: "",
+    newStart: "",
+    newEnd: "",
+    newNotes: "",
+  },
+
+  methods: {
+    updateLesson() {
+      axios
+        .patch('/records/lessons/' + this.id + '/', {
+          student: this.newStudent,
+          start_at: this.newStart,
+          end_at: this.newEnd,
+          notes: this.newNotes
+        })
+        .then(response => {
+          console.log("Update: " + response.statusText);
+        });
+    },
+  },
+  
+  mounted () {
+    axios
+      .get('/records/lessons/' + this.id + '/')
+      .then(response => {
+        console.log("Get: " + response.statusText);
+        let lessonData = response.data;
+        this.newStudent = lessonData.student;
+        this.newStart = lessonData.start_at;
+        this.newEnd = lessonData.end_at;
+        this.newNotes = lessonData.notes;        
+      });
+  }
+});
+
+{% include "ui/footer.html" %}
