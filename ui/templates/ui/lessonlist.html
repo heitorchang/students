@@ -10,14 +10,26 @@ Students:
 <h4 class="title is-4">Classes</h4>
 
   <div id="toasts">
-  <toast v-for="notification in notifications" :key="notification.id">{notification.message}</toast>
+    <div v-for="notification in notifications" :key="notification.id" class="notification is-info">
+      <button class="delete" @click="removeNotification(notification.id)"></button>
+      {notification.message}
+    </div>
   </div>
 
+  <div id="errors">
+    <div v-for="error in errors" :key="error.id" class="notification is-danger">
+      <button class="delete" @click="removeError(error.id)"></button>
+      {error.message}
+    </div>
+  </div>
+
+<!--
 <ul>
   <li v-for="lesson in lessons">{studentDict[lesson.student]} {lesson.notes}
   <a :href="'/ui/lessons/' + lesson.id + '/'">Edit</a>
   <button @click="deleteLesson(lesson.id)">Delete {lesson.id}</button>
 </ul>
+-->
 
 <br>
 Add Class:<br>
@@ -34,6 +46,7 @@ let vapp = new Vue({
 
   data: {
     notifications: [],
+    errors: [],
     students: [],
     studentDict: {},
     lessons: [],
@@ -44,8 +57,18 @@ let vapp = new Vue({
   },
 
   methods: {
-    addToast(message) {
-      
+    removeNotification(id) {
+      axios
+        .patch('/records/notifications/' + id + '/', {
+          is_new: false,
+        })
+        .then(response => {
+          console.log("Remove notification: " + response.statusText);
+          this.notifications = this.notifications.filter(e => e.id !== id);
+        });
+    },
+    removeError(id) {
+      this.errors = this.errors.filter(e => e.id !== id);
     },
     addLesson() {
       axios
@@ -79,18 +102,17 @@ let vapp = new Vue({
       axios.get('{% url "records:lesson_list" %}'),
       axios.get('{% url "records:notification_list" %}')
     ])
-      .then(axios.spread(function (studentResponse, lessonResponse, notificationResponse) {
+      .then(axios.spread((studentResponse, lessonResponse, notificationResponse) => {
         console.log("Get Students: " + studentResponse.statusText);
         console.log("Get Lessons: " + lessonResponse.statusText);
         console.log("Get Notifications: " + notificationResponse.statusText);
-        
+        this.notifications = notificationResponse.data;
         this.students = studentResponse.data;
         this.students.forEach(s => this.studentDict[s.id] = s.name);
         this.lessons = lessonResponse.data;
-        this.notifications = notificationResponse.data;
       }))
       .catch((err) => {
-        this.notifications.push({id: 0, message: err});
+        this.errors.push({id: 0, message: err, is_new: true});
       });
   }
 });

@@ -49,4 +49,4 @@ class Notification(models.Model):
         ordering = ['teacher', '-is_new', 'due_at']
 
     def __str__(self):
-        return "{} due {}".format(self.message, format_lesson_time(self.due_at))
+        return "{} due {} {}".format(self.message, format_lesson_time(self.due_at), "[unread]" if self.is_new else "")

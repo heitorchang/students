@@ -1,20 +1,20 @@
 began project as keyenglish on 4.oct.19 
 
 Backend
-[  ] handle AJAX error codes (400 bad request when making new student)
+[  ] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] view to download only a month of lessons
 [  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
 [OK] create model for notifications (created_at, due_at)
 [OK] archive student instead of deleting
+[OK] update notification's new status when dismissing it
 
 UI
 [  ] student list shows next class
 [  ] prev/next link in monthly component bubbles up to root
 [  ] Select dropdown for students
 [  ] get mm for monthly from $parent, not prop
-[  ] toasts/notices after AJAX calls
 [  ] replace vue js with min version
 [  ] block screen while saving JSON
 [OK] allow blank fields on submit (defaults are set client-side)
@@ -23,5 +23,4 @@ Display
 [  ] modify Bulma colors (sass?)
 [  ] hello kitty template
 [  ] hello kitty favicon
-[  ] search for alert
 [OK] add v-cloak to app section tag
