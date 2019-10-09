@@ -6,18 +6,20 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name (edit/del)</th>
+      <th>Name</th>
       <th>Phone</th>
       <th><abbr title="Weekday">Wkdy</abbr></th>
       <th>Time</th>
+      <th>Hidden?</th>
     </tr>
   </thead>
   <tbody>
     <tr v-for="student in students">
-      <td><a :href="'/ui/students/' + student.id + '/'">{student.name}</a></td>
+      <td><a :href="'/ui/students/' + student.id + '/'" class="has-text-weight-bold">{student.name}</a></td>
       <td>{student.phone}</td>
       <td>{student.lesson_weekday}</td>
       <td>{student.lesson_time}</td>
+      <td>{student.archived}</td>
     </tr>
   </tbody>
 </table>
@@ -71,22 +73,20 @@ let vapp = new Vue({
                 email: this.newEmail,
                 lesson_weekday: this.newWeekday,
                 lesson_time: this.newTime,
+                archived: false,
               })
         .then(response => {
           console.log(response.data);
-          this.students.push(response.data);
+          this.students.unshift(response.data);
+          this.toggleModal();
+          this.newName = "";
+          this.newPhone = "";
+          this.newEmail = "";
+          this.newWeekday = "";
+          this.newTime = "";
         });
           
     },
-    deleteStudent(id) {
-      axios
-        .delete('/records/students/' + id + '/')
-        .then(response => {
-          console.log("Delete: " + response.statusText);
-          this.students = this.students.filter(e => e.id !== id);
-        });
-    }
-
   },
   
   mounted () {

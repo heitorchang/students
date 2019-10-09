@@ -15,6 +15,7 @@ class Student(models.Model):
     email = models.EmailField(blank=True)
     lesson_weekday = models.IntegerField(blank=True, null=True)  # 0 = Monday
     lesson_time = models.TimeField(blank=True, null=True)
+    archived = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['name']

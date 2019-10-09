@@ -1,17 +1,19 @@
 {% load static %}
 {% include "ui/header.html" %}
 
-<h4 class="title is-4">Edit/Delete Student</h4>
+<h4 class="title is-4">Edit Student</h4>
 
 <div v-if="studentLoaded">
 
 {% include "ui/studentform.html" %}
-
-<button class="button is-primary" @click="updateStudent">Update</button>
+<label class="checkbox">
+  <input type="checkbox" class="checkbox" v-model="newArchived">
+  Hide student's classes
+</label>
 
 <br><br>
 
-<button class="button is-danger">Delete</button>
+<button class="button is-primary" @click="updateStudent">Update</button>
 
 {% include "ui/commonscripts.html" %}
 
@@ -27,6 +29,7 @@ let vapp = new Vue({
     newEmail: "",
     newWeekday: "",
     newTime: "",
+    newArchived: false,
     studentLoaded: false,
   },
 
@@ -38,13 +41,23 @@ let vapp = new Vue({
           phone: this.newPhone,
           email: this.newEmail,
           lesson_weekday: this.newWeekday,  
-          lesson_time: this.newTime
+          lesson_time: this.newTime,
+          archived: this.newArchived,
         })
         .then(response => {
           console.log("Update: " + response.statusText);
           window.location.href = "/ui/students/";
         });
     },
+    deleteStudent() {
+      axios
+        .delete('/records/students/' + this.id + '/')
+        .then(response => {
+          console.log("Delete: " + response.statusText);
+          window.location.href = "/ui/students/";
+        });
+    }
+
   },
   
   mounted () {
@@ -58,6 +71,7 @@ let vapp = new Vue({
         this.newEmail = studentData.email;
         this.newWeekday = studentData.lesson_weekday;
         this.newTime = studentData.lesson_time;
+        this.newArchived = studentData.archived;
         this.studentLoaded = true;
       });
   }

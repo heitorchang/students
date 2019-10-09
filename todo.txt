@@ -4,8 +4,10 @@ Backend
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
+[  ] archive student instead of deleting
 
 UI
+[  ] student list shows next class
 [  ] allow blank fields on submit
 [  ] prev/next link in monthly component bubbles up to root
 [  ] Select dropdown for students
