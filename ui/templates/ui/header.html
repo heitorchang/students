@@ -11,7 +11,58 @@
   </style>
 </head>
 
-<body>
-<a href="/ui/students/">Students</a> | <a href="/ui/lessons/">Lessons</a>
+<body class="has-navbar-fixed-top">
+<nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="{% static "img/brandicon.png" %}">
+      Key
+    </a>
+    <a class="navbar-item" href="/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/mail.png" %}" alt="mail">
+      </figure>
+    </a>
+    <a class="navbar-item" href="/ui/students/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/people.png" %}" alt="students">
+      </figure>
+    </a>
+    <a class="navbar-item" href="/ui/lessons/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/calendar.png" %}" alt="calendar">
+      </figure>
+    </a>
+    <a class="navbar-item" href="/admin/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/database.png" %}" alt="admin">
+      </figure>
+    </a>
+    <a class="navbar-item" href="/accounts/logout/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/exit.png" %}" alt="exit">
+      </figure>
+    </a>
+
+<!--
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+-->
+  </div>
+
+<!--
+  <div id="navbarBasicExample" class="navbar-menu is-active">
+    <div class="navbar-start">
+    </div>
+    
+    <div class="navbar-end">
+    </div>
+  </div>
+-->
+
+</nav>
 
 <div id="app" class="container" v-cloak>
