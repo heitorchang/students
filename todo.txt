@@ -21,6 +21,6 @@ UI
 
 Display
 [  ] modify Bulma colors (sass?)
-[  ] hello kitty template
-[  ] hello kitty favicon
+[OK] hello kitty template
+[OK] hello kitty favicon
 [OK] add v-cloak to app section tag
