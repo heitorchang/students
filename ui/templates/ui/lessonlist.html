@@ -8,6 +8,11 @@ Students:
 -->
 
 <h4 class="title is-4">Classes</h4>
+
+  <div id="toasts">
+  <toast v-for="notification in notifications" :key="notification.id">{notification.message}</toast>
+  </div>
+
 <ul>
   <li v-for="lesson in lessons">{studentDict[lesson.student]} {lesson.notes}
   <a :href="'/ui/lessons/' + lesson.id + '/'">Edit</a>
@@ -28,6 +33,7 @@ let vapp = new Vue({
   el: "#app",
 
   data: {
+    notifications: [],
     students: [],
     studentDict: {},
     lessons: [],
@@ -38,6 +44,9 @@ let vapp = new Vue({
   },
 
   methods: {
+    addToast(message) {
+      
+    },
     addLesson() {
       axios
         .post('{% url "records:lesson_list" %}',
@@ -65,18 +74,23 @@ let vapp = new Vue({
   },
   
   mounted () {
-    axios
-      .get('{% url "records:student_list" %}')
-      .then(response => {
-        console.log("Get student list: " + response.statusText);
-        this.students = response.data;
+    axios.all([
+      axios.get('{% url "records:student_list" %}'),
+      axios.get('{% url "records:lesson_list" %}'),
+      axios.get('{% url "records:notification_list" %}')
+    ])
+      .then(axios.spread(function (studentResponse, lessonResponse, notificationResponse) {
+        console.log("Get Students: " + studentResponse.statusText);
+        console.log("Get Lessons: " + lessonResponse.statusText);
+        console.log("Get Notifications: " + notificationResponse.statusText);
+        
+        this.students = studentResponse.data;
         this.students.forEach(s => this.studentDict[s.id] = s.name);
-        axios
-          .get('{% url "records:lesson_list" %}')
-          .then(response => {
-            console.log("Get lesson list: " + response.statusText);
-            this.lessons = response.data;
-          });
+        this.lessons = lessonResponse.data;
+        this.notifications = notificationResponse.data;
+      }))
+      .catch((err) => {
+        this.notifications.push({id: 0, message: err});
       });
   }
 });

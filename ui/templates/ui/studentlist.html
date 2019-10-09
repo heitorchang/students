@@ -65,6 +65,22 @@ let vapp = new Vue({
     },
     
     addStudent() {
+      if (this.newName.trim() == "") {
+        this.newName = "Anonymous";
+      }
+      if (this.newPhone.trim() == "") {
+        this.newPhone = "0";
+      }
+      if (this.newEmail.trim() == "") {
+        this.newEmail = "nobody@none.com";
+      }
+      if (this.newWeekday.trim() == "") {
+        this.newWeekday = "1";
+      }
+      if (this.newTime.trim() == "") {
+        this.newTime = "0:00";
+      }
+      
       axios
         .post('{% url "records:student_list" %}',
               { teacher: {{ request.user.id }},

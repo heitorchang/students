@@ -18,10 +18,10 @@ class Student(models.Model):
     archived = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['teacher', 'name']
         
     def __str__(self):
-        return self.name
+        return "{} ({})".format(self.name, self.teacher)
 
     
 class Lesson(models.Model):
@@ -32,7 +32,21 @@ class Lesson(models.Model):
     notes = models.TextField(blank=True)
 
     class Meta:
-        ordering = ['start_at']
+        ordering = ['teacher', 'start_at']
         
     def __str__(self):
         return "{} {} to {}".format(self.student, format_lesson_time(self.start_at), format_lesson_time(self.end_at))
+
+
+class Notification(models.Model):
+    teacher = models.ForeignKey(User, related_name="records_notifications", on_delete=models.CASCADE)
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    due_at = models.DateTimeField()
+    is_new = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['teacher', '-is_new', 'due_at']
+
+    def __str__(self):
+        return "{} due {}".format(self.message, format_lesson_time(self.due_at))

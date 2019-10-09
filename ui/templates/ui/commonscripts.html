@@ -54,3 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
 var csrftoken = getCookie('csrftoken');
 
 axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+
+Vue.component('toast', {
+  template: `
+<div class="notification is-danger">
+  <button class="delete"></button>
+<slot></slot>
+</div>
+`
+});

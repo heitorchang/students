@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from django.shortcuts import render
 from .models import Student, Lesson
-from .serializers import StudentSerializer, LessonSerializer
+from .serializers import StudentSerializer, LessonSerializer, NotificationSerializer
 from .permissions import IsTeacher
 
 """
@@ -52,3 +52,14 @@ class LessonDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = (permissions.IsAuthenticated, IsTeacher)
+
+
+class NotificationList(generics.ListCreateAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = (permissions.IsAuthenticated, IsTeacher)
+
+    def get_queryset(self):
+        return Notification.objects.filter(teacher=self.request.user, is_new=True)
+
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
