@@ -1,6 +1,6 @@
 Backend
-[  ] create model for notifications
-[  ] handle error codes (400 bad request when making new student)
+[  ] create model for notifications (created_at, due_at)
+[  ] handle AJAX error codes (400 bad request when making new student)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
@@ -16,6 +16,7 @@ UI
 [  ] block screen while saving JSON
 
 Display
-[  ] add v-cloak to app div
+[  ] modify Bulma colors (sass?)
 [  ] hello kitty template
 [  ] hello kitty favicon
+[OK] add v-cloak to app section tag

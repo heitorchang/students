@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 from ui.views import index
 import django.contrib.auth.urls as auth_urls
 
@@ -24,5 +25,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('records/', include('records.urls'), name="records"),
     path('ui/', include('ui.urls'), name="ui"),
-    path('', index),
+    path('', RedirectView.as_view(url="/ui/lessons/", permanent=False), name="index"),
 ]

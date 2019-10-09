@@ -1,11 +1,17 @@
 {% load static %}
 {% include "ui/header.html" %}
 
-Student<br>
+<h4 class="title is-4">Edit/Delete Student</h4>
+
+<div v-if="studentLoaded">
 
 {% include "ui/studentform.html" %}
 
-<button @click="updateStudent">Update</button>
+<button class="button is-primary" @click="updateStudent">Update</button>
+
+<br><br>
+
+<button class="button is-danger">Delete</button>
 
 {% include "ui/commonscripts.html" %}
 
@@ -21,6 +27,7 @@ let vapp = new Vue({
     newEmail: "",
     newWeekday: "",
     newTime: "",
+    studentLoaded: false,
   },
 
   methods: {
@@ -35,6 +42,7 @@ let vapp = new Vue({
         })
         .then(response => {
           console.log("Update: " + response.statusText);
+          window.location.href = "/ui/students/";
         });
     },
   },
@@ -49,7 +57,8 @@ let vapp = new Vue({
         this.newPhone = studentData.phone;
         this.newEmail = studentData.email;
         this.newWeekday = studentData.lesson_weekday;
-        this.newTime = studentData.lesson_time;        
+        this.newTime = studentData.lesson_time;
+        this.studentLoaded = true;
       });
   }
 });

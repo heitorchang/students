@@ -16,11 +16,20 @@
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img src="{% static "img/brandicon.png" %}">
-      Key
+      {{ request.user.username }}
     </a>
+
+<!--
     <a class="navbar-item" href="/">
       <figure class="image is-24x24">
         <img src="{% static "img/mail.png" %}" alt="mail">
+      </figure>
+    </a>
+-->
+
+    <a class="navbar-item" href="/ui/lessons/">
+      <figure class="image is-24x24">
+        <img src="{% static "img/calendar.png" %}" alt="calendar">
       </figure>
     </a>
     <a class="navbar-item" href="/ui/students/">
@@ -28,16 +37,14 @@
         <img src="{% static "img/people.png" %}" alt="students">
       </figure>
     </a>
-    <a class="navbar-item" href="/ui/lessons/">
-      <figure class="image is-24x24">
-        <img src="{% static "img/calendar.png" %}" alt="calendar">
-      </figure>
-    </a>
-    <a class="navbar-item" href="/admin/">
+
+<!--    
+    <a class="navbar-item" href="/admin/" target="_blank">
       <figure class="image is-24x24">
         <img src="{% static "img/database.png" %}" alt="admin">
       </figure>
     </a>
+-->
     <a class="navbar-item" href="/accounts/logout/">
       <figure class="image is-24x24">
         <img src="{% static "img/exit.png" %}" alt="exit">
@@ -65,4 +72,5 @@
 
 </nav>
 
-<div id="app" class="container" v-cloak>
+<section id="app" class="section" v-cloak>
+<div class="container is-fluid">
