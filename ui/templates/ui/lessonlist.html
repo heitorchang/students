@@ -284,6 +284,9 @@
                      lesson_weekday: '',
                      lesson_time: '',
                    };
+                 })
+                 .catch(err => {
+                   alert(err);
                  });
              },
 
@@ -313,6 +316,9 @@
                    this.students.splice(i, 1);
                    this.insertStudentData(this.existingStudent);
                    $("#editStudentModal").modal('hide');
+                 })
+                 .catch(err => {
+                   alert(err);
                  });
              },           
            },
@@ -334,9 +340,10 @@
                     this.lessons = lessonsResponse.data;
                   }))
                   .catch(err => {
+                    alert(err);
                     this.errors.push({id: this.errorId, message: err, is_new: true});
                     this.errorId += 1;
-                  });
+                  })
            }
          });
         </script>
