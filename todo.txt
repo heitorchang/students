@@ -12,6 +12,8 @@ Backend
 
 UI
 [  ] test add/edit interaction
+[  ] close modal in finally block?
+[  ] allow submitting blanks, remove "0", "anonymous" nonsense
 [  ] toast after successful add/edit
 [  ] disable submit button on modals while network processes it
 [  ] student list shows next class as computed property
@@ -20,13 +22,13 @@ UI
 [  ] get mm for monthly from $parent, not prop
 [  ] replace vue js with min version
 [  ] block screen while saving JSON
-[  ] bundle all js (use vue min in production)
+[  ] Use vue min in bundle
 [  ] remove JS alerts
 [OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
 
 Display
-[  ] modify Bootstrap primary colors (manually alter min.css?)
+[OK] modify Bootstrap primary colors (used 3rd-party online tool)
 [OK] hello kitty template
 [OK] hello kitty favicon
 [OK] add v-cloak to app section tag

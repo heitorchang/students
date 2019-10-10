@@ -25,5 +25,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('records/', include('records.urls'), name="records"),
     path('ui/', include('ui.urls'), name="ui"),
-    path('', RedirectView.as_view(url="/ui/lessons/", permanent=False), name="index"),
+    path('', RedirectView.as_view(url="/ui/", permanent=False), name="index"),
 ]
