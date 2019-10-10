@@ -1,6 +1,7 @@
 began project as keyenglish on 4.oct.19 
 
 Backend
+[  ] do not pass teacher id from client, but use it from request user in django
 [  ] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
