@@ -6,32 +6,9 @@
         <link rel="stylesheet" href="/static/css/bootstrap.min.css">
         <title>Key English</title>
         <style>
-         @font-face {
-             font-family: "CraftyGirls";
-             src: url('/static/css/CraftyGirls.ttf');
-             font-style: normal;
-         }
-         
          .pink-icon-header {
              line-height: 1;
              background-color: #fac;
-         }
-
-         .pink-icon-header a {
-             color: #f00;
-             text-decoration: none;
-             font-size: 1em;
-         }
-
-         .pink-icon-header a:hover {
-             color: #fdd;
-         }
-
-         .site-name {
-             font-family: "CraftyGirls";
-             font-size: 1.2em;
-             background-color: #ffdddd;
-             text-align: center;
          }
 
          .section-header {
@@ -58,7 +35,6 @@
     <body>
         <nav>
             <div class="nav nav-pills justify-content-center nav-tabs" id="nav-ab" role="tablist">
-                <a class="nav-link site-name">Key English</a>
                 <a class="nav-item nav-link active" id="nav-classes-tab" data-toggle="tab" href="#nav-classes" role="tab" aria-controls="nav-classes" aria-selected="true"><img src="/static/img/calendar.png" alt="cal"> Classes</a>
                 <a class="nav-item nav-link" id="nav-students-tab" data-toggle="tab" href="#nav-students" role="tab" aria-controls="nav-students" aria-selected="false"><img src="/static/img/people.png" alt="ppl"> Students</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><img src="/static/img/brandicon.png" alt="kitty"> key</a>
@@ -72,7 +48,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
                     Add Student
                 </button>
-                <table class="table">
+                <table class="table table-borderless">
                     <thead>
                         <tr>
                             <th>Name</th>
