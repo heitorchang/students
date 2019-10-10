@@ -12,19 +12,21 @@ Backend
 
 UI
 [  ] test add/edit interaction
-[OK] changing student name should insert in right place
+[  ] toast after successful add/edit
 [  ] disable submit button on modals while network processes it
 [  ] student list shows next class as computed property
-[  ] prev/next link in monthly component bubbles up to root
+[  ] prev/next link in monthly component, should download new data
 [  ] Select dropdown for students
 [  ] get mm for monthly from $parent, not prop
 [  ] replace vue js with min version
 [  ] block screen while saving JSON
 [  ] bundle all js (use vue min in production)
+[  ] remove JS alerts
+[OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
 
 Display
-[  ] modify Bulma colors (sass?)
+[  ] modify Bootstrap primary colors (manually alter min.css?)
 [OK] hello kitty template
 [OK] hello kitty favicon
 [OK] add v-cloak to app section tag
