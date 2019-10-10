@@ -30,7 +30,8 @@ class Lesson(models.Model):
     start_at = models.DateTimeField()
     end_at = models.DateTimeField()
     notes = models.TextField(blank=True)
-
+    notified = models.BooleanField(default=False)
+    
     class Meta:
         ordering = ['teacher', 'start_at']
         

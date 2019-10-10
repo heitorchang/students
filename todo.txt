@@ -11,12 +11,16 @@ Backend
 [OK] update notification's new status when dismissing it
 
 UI
-[  ] student list shows next class
+[  ] test add/edit interaction
+[OK] changing student name should insert in right place
+[  ] disable submit button on modals while network processes it
+[  ] student list shows next class as computed property
 [  ] prev/next link in monthly component bubbles up to root
 [  ] Select dropdown for students
 [  ] get mm for monthly from $parent, not prop
 [  ] replace vue js with min version
 [  ] block screen while saving JSON
+[  ] bundle all js (use vue min in production)
 [OK] allow blank fields on submit (defaults are set client-side)
 
 Display

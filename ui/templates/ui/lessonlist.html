@@ -1,112 +1,368 @@
-{% load static %}
-{% include "ui/header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <title>Key English</title>
+        <style>
+         @font-face {
+             font-family: "CraftyGirls";
+             src: url('/static/css/CraftyGirls.ttf');
+             font-style: normal;
+         }
+         
+         .pink-icon-header {
+             line-height: 1;
+             background-color: #fac;
+         }
 
-<h4 class="title is-4">Classes</h4>
+         .pink-icon-header a {
+             color: #f00;
+             text-decoration: none;
+             font-size: 1em;
+         }
 
-  <div id="toasts">
-    <div v-for="notification in notifications" :key="notification.id" class="notification is-info">
-      <button class="delete" @click="removeNotification(notification.id)"></button>
-      {notification.message}
-    </div>
-  </div>
+         .pink-icon-header a:hover {
+             color: #fdd;
+         }
 
-  <div id="errors">
-    <div v-for="error in errors" :key="error.id" class="notification is-danger">
-      <button class="delete" @click="removeError(error.id)"></button>
-      {error.message}
-    </div>
-  </div>
+         .site-name {
+             font-family: "CraftyGirls";
+             font-size: 1.2em;
+             background-color: #ffdddd;
+             text-align: center;
+         }
 
-<ul>
-  <li v-for="lesson in lessons">{studentDict[lesson.student]} {lesson.notes}
-  <a :href="'/ui/lessons/' + lesson.id + '/'">Edit</a>
-  <button @click="deleteLesson(lesson.id)">Delete {lesson.id}</button>
-</ul>
+         .section-header {
+             font-size: 1.6em;
+             font-weight: bold;
+         }
 
-<br>
-Add Class:<br>
+         [v-cloak] {
+             display: none;
+         }
+         
+         body {
+             height: 100%;
+             background-color: #ffdddd;
+             background-image: url('/static/img/hello_bg_pad.jpg');
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             background-position: top right;
+             background-size: auto 400px;             
+         }
 
-{% include "ui/lessonform.html" %}
-<button @click="addLesson">Add</button>
-  
-{% include "ui/commonscripts.html" %}
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="nav nav-pills justify-content-center nav-tabs" id="nav-ab" role="tablist">
+                <a class="nav-link site-name">Key English</a>
+                <a class="nav-item nav-link active" id="nav-classes-tab" data-toggle="tab" href="#nav-classes" role="tab" aria-controls="nav-classes" aria-selected="true"><img src="/static/img/calendar.png" alt="cal"> Classes</a>
+                <a class="nav-item nav-link" id="nav-students-tab" data-toggle="tab" href="#nav-students" role="tab" aria-controls="nav-students" aria-selected="false"><img src="/static/img/people.png" alt="ppl"> Students</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><img src="/static/img/brandicon.png" alt="kitty"> key</a>
+            </div>
+        </nav>
 
-let vapp = new Vue({
-  delimiters: ['{', '}'],
+        <div class="tab-content" id="app" v-cloak>
+            
+            <div class="tab-pane fade show active" id="nav-classes" role="tabpanel" aria-labelledby="nav-classes-tab">
+                <h4>Classes</h4>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+                    Add Student
+                </button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th><abbr title="Weekday">Wkdy</abbr></th>
+                            <th>Time</th>
+                            <th>Hidden?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="student in students">
+                            <td><a href="#" @click="findStudent(student.id)">{student.name}</a></td>
+                            <td>{student.phone}</td>
+                            <td>{student.lesson_weekday}</td>
+                            <td>{student.lesson_time}</td>
+                            <td>{student.archived}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="nav-students" role="tabpanel" aria-labelledby="nav-students-tab">
+                <h4>Students</h4>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+                    Add Student
+                </button>
+            </div>
 
-  el: "#app",
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <h4>My Profile</h4>
+                <h3>
+                    <a href="/admin/" target="_blank">Admin</a>
+                </h3>
+            </div>
+            
+            <!-- Modals -->
+            <!-- Add Student Modal -->
+            <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
-  data: {
-    notifications: [],
-    errors: [],
-    students: [],
-    studentDict: {},
-    lessons: [],
-    newStudent: "",
-    newStart: "",
-    newEnd: "",
-    newNotes: "",
-  },
+                            <!-- Add Student form -->
+                            <form>
+                                <div class="form-group">
+                                    <label for="addStudentName">Name</label>
+                                    <input type="text" class="form-control" id="addStudentName" placeholder="Student's Name" v-model="newStudent.name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addStudentPhone">Phone</label>
+                                    <input type="text" class="form-control" id="addStudentPhone" placeholder="Student's Phone" v-model="newStudent.phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addStudentEmail">Email</label>
+                                    <input type="text" class="form-control" id="addStudentEmail" placeholder="Student's Email" v-model="newStudent.email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addStudentWeekday">Recurring Weekday</label>
+                                    <input type="text" class="form-control" id="addStudentWeekday" placeholder="Recurring Weekday" v-model="newStudent.lesson_weekday">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addStudentTime">Recurring Time</label>
+                                    <input type="text" class="form-control" id="addStudentTime" placeholder="Recurring Time" v-model="newStudent.lesson_time">
+                                </div>
+                                <button type="submit" class="btn btn-primary" @click="addStudent">Submit</button>
+                            </form>
 
-  methods: {
-    removeNotification(id) {
-      axios
-        .patch('/records/notifications/' + id + '/', {
-          is_new: false,
-        })
-        .then(response => {
-          console.log("Remove notification: " + response.statusText);
-          this.notifications = this.notifications.filter(e => e.id !== id);
-        });
-    },
-    removeError(id) {
-      this.errors = this.errors.filter(e => e.id !== id);
-    },
-    addLesson() {
-      axios
-        .post('{% url "records:lesson_list" %}',
-              { teacher: {{ request.user.id }},
-                student: this.newStudent,
-                start_at: this.newStart,
-                end_at: this.newEnd,
-                notes: this.newNotes,
-              })
-        .then(response => {
-          console.log(response.data);
-          this.lessons.push(response.data);
-        });
-          
-    },
-    deleteLesson(id) {
-      axios
-        .delete('/records/lessons/' + id + '/')
-        .then(response => {
-          console.log("Delete: " + response.statusText);
-          this.lessons = this.lessons.filter(e => e.id !== id);
-        });
-    }
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  },
-  
-  mounted () {
-    axios.all([
-      axios.get('{% url "records:student_list" %}'),
-      axios.get('{% url "records:lesson_list" %}'),
-      axios.get('{% url "records:notification_list" %}')
-    ])
-      .then(axios.spread((studentResponse, lessonResponse, notificationResponse) => {
-        console.log("Get Students: " + studentResponse.statusText);
-        console.log("Get Lessons: " + lessonResponse.statusText);
-        console.log("Get Notifications: " + notificationResponse.statusText);
-        this.notifications = notificationResponse.data;
-        this.students = studentResponse.data;
-        this.students.forEach(s => this.studentDict[s.id] = s.name);
-        this.lessons = lessonResponse.data;
-      }))
-      .catch((err) => {
-        this.errors.push({id: 0, message: err, is_new: true});
-      });
-  }
-});
+            <!-- Edit Student Modal -->
+            <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
-{% include "ui/footer.html" %}
+                            <!-- Edit Student form -->
+                            <form>
+                                <div class="form-group">
+                                    <label for="editStudentName">Name</label>
+                                    <input type="text" class="form-control" id="editStudentName" placeholder="Student's Name" v-model="existingStudent.name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStudentPhone">Phone</label>
+                                    <input type="text" class="form-control" id="editStudentPhone" placeholder="Student's Phone" v-model="existingStudent.phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStudentEmail">Email</label>
+                                    <input type="text" class="form-control" id="editStudentEmail" placeholder="Student's Email" v-model="existingStudent.email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStudentWeekday">Recurring Weekday</label>
+                                    <input type="text" class="form-control" id="editStudentWeekday" placeholder="Recurring Weekday" v-model="existingStudent.lesson_weekday">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStudentTime">Recurring Time</label>
+                                    <input type="text" class="form-control" id="editStudentTime" placeholder="Recurring Time" v-model="existingStudent.lesson_time">
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="editStudentHidden" v-model="existingStudent.archived">
+                                    <label class="form-check-label" for="editStudentHidden">Hide Student's Lessons</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" @click="updateStudent">Submit</button>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modals -->
+
+        </div>
+
+        
+        <script src="/static/js/bsxldfbundle.js"></script>
+        <script src="/static/js/vue.js"></script>
+
+        <script>
+         // https://docs.djangoproject.com/en/2.2/ref/csrf/#ajax
+         function getCookie(name) {
+           var cookieValue = null;
+           if (document.cookie && document.cookie !== '') {
+             var cookies = document.cookie.split(';');
+             for (var i = 0; i < cookies.length; i++) {
+               var cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                 break;
+               }
+             }
+           }
+           return cookieValue;
+         }
+         var csrftoken = getCookie('csrftoken');
+         axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+
+         
+         let app = new Vue({
+           delimiters: ['{', '}'],
+           el: "#app",
+           
+           data: {
+             notifications: [],
+             errors: [],
+             students: [],
+             lessons: [],
+
+             newStudent: {
+               name: '',
+               phone: '',
+               email: '',
+               lesson_weekday: '',
+               lesson_time: '',
+             },
+             existingStudent: {},
+             
+             newLesson: {
+               student: 0,
+               start_at: '',
+               end_at: '',
+               notes: '',
+             },
+             existingLesson: {},
+             
+             errorId: 0,
+           },
+
+           methods: {
+             insertStudentData(student) {
+               // find right place to put new student
+               let i = 0;
+               for (const s of this.students) {
+                 if (s.name > student.name) {
+                   break;
+                 }
+                 i += 1;
+               }
+               this.students.splice(i, 0, {...student});
+             },
+             
+             addStudent() {
+               if (this.newStudent.name.trim() == "") {
+                 this.newStudent.name = "Anonymous";
+               }
+               if (this.newStudent.phone.trim() == "") {
+                 this.newStudent.phone = "0";
+               }
+               if (this.newStudent.email.trim() == "") {
+                 this.newStudent.email = "nobody@none.com";
+               }
+               if (this.newStudent.lesson_weekday.trim() == "") {
+                 this.newStudent.lesson_weekday = "1";
+               }
+               if (this.newStudent.lesson_time.trim() == "") {
+                 this.newStudent.lesson_time = "0:00";
+               }
+
+               const studentToAdd = {
+                 teacher: {{ request.user.id }},
+                 name: this.newStudent.name,
+                 phone: this.newStudent.phone,
+                 email: this.newStudent.email,
+                 lesson_weekday: this.newStudent.lesson_weekday,
+                 lesson_time: this.newStudent.lesson_time,
+                 archived: false,
+               };
+               
+               axios
+                 .post('{% url "records:student_list" %}', studentToAdd)
+                 .then(response => {
+                   console.log(response.data);
+                   $("#addStudentModal").modal('hide');
+                   this.insertStudentData(response.data);
+                   this.newStudent = {
+                     name: '',
+                     phone: '',
+                     email: '',
+                     lesson_weekday: '',
+                     lesson_time: '',
+                   };
+                 });
+             },
+
+             findStudent(id) {
+               for (const s of this.students) {
+                 if (s.id === id) {
+                   this.existingStudent = {...s};
+                   break;
+                 }
+               }
+               $("#editStudentModal").modal('show');
+             },
+
+             updateStudent() {
+               axios
+                 .patch('/records/students/' + this.existingStudent.id + '/', this.existingStudent)
+                 .then(response => {
+                   console.log("Update student: " + response.statusText);
+                   // find student in current list
+                   let i = 0;
+                   for (s of this.students) {
+                     if (s.id === this.existingStudent.id) {
+                       break;
+                     }
+                     i += 1;
+                   }
+                   this.students.splice(i, 1);
+                   this.insertStudentData(this.existingStudent);
+                   $("#editStudentModal").modal('hide');
+                 });
+             },           
+           },
+           
+           mounted() {
+             // Bootstrap modal autofocus
+             $("#addStudentModal").on('shown.bs.modal', function() {
+               $("#addStudentName").trigger('focus');
+             });
+
+             axios.all([
+               axios.get('/records/students/'),
+               axios.get('/records/lessons/'),
+               axios.get('/records/notifications/')
+             ])
+                  .then(axios.spread((studentsResponse, lessonsResponse, notificationsResponse) => {
+                    this.notifications = notificationsResponse.data;
+                    this.students = studentsResponse.data;
+                    this.lessons = lessonsResponse.data;
+                  }))
+                  .catch(err => {
+                    this.errors.push({id: this.errorId, message: err, is_new: true});
+                    this.errorId += 1;
+                  });
+           }
+         });
+        </script>
+    </body>
+</html>

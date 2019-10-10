@@ -1,0 +1,112 @@
+{% load static %}
+{% include "ui/header.html" %}
+
+<h4 class="title is-4">Classes</h4>
+
+  <div id="toasts">
+    <div v-for="notification in notifications" :key="notification.id" class="notification is-info">
+      <button class="delete" @click="removeNotification(notification.id)"></button>
+      {notification.message}
+    </div>
+  </div>
+
+  <div id="errors">
+    <div v-for="error in errors" :key="error.id" class="notification is-danger">
+      <button class="delete" @click="removeError(error.id)"></button>
+      {error.message}
+    </div>
+  </div>
+
+<ul>
+  <li v-for="lesson in lessons">{studentDict[lesson.student]} {lesson.notes}
+  <a :href="'/ui/lessons/' + lesson.id + '/'">Edit</a>
+  <button @click="deleteLesson(lesson.id)">Delete {lesson.id}</button>
+</ul>
+
+<br>
+Add Class:<br>
+
+{% include "ui/lessonform.html" %}
+<button @click="addLesson">Add</button>
+  
+{% include "ui/commonscripts.html" %}
+
+let vapp = new Vue({
+  delimiters: ['{', '}'],
+
+  el: "#app",
+
+  data: {
+    notifications: [],
+    errors: [],
+    students: [],
+    studentDict: {},
+    lessons: [],
+    newStudent: "",
+    newStart: "",
+    newEnd: "",
+    newNotes: "",
+  },
+
+  methods: {
+    removeNotification(id) {
+      axios
+        .patch('/records/notifications/' + id + '/', {
+          is_new: false,
+        })
+        .then(response => {
+          console.log("Remove notification: " + response.statusText);
+          this.notifications = this.notifications.filter(e => e.id !== id);
+        });
+    },
+    removeError(id) {
+      this.errors = this.errors.filter(e => e.id !== id);
+    },
+    addLesson() {
+      axios
+        .post('{% url "records:lesson_list" %}',
+              { teacher: {{ request.user.id }},
+                student: this.newStudent,
+                start_at: this.newStart,
+                end_at: this.newEnd,
+                notes: this.newNotes,
+              })
+        .then(response => {
+          console.log(response.data);
+          this.lessons.push(response.data);
+        });
+          
+    },
+    deleteLesson(id) {
+      axios
+        .delete('/records/lessons/' + id + '/')
+        .then(response => {
+          console.log("Delete: " + response.statusText);
+          this.lessons = this.lessons.filter(e => e.id !== id);
+        });
+    }
+
+  },
+  
+  mounted () {
+    axios.all([
+      axios.get('{% url "records:student_list" %}'),
+      axios.get('{% url "records:lesson_list" %}'),
+      axios.get('{% url "records:notification_list" %}')
+    ])
+      .then(axios.spread((studentResponse, lessonResponse, notificationResponse) => {
+        console.log("Get Students: " + studentResponse.statusText);
+        console.log("Get Lessons: " + lessonResponse.statusText);
+        console.log("Get Notifications: " + notificationResponse.statusText);
+        this.notifications = notificationResponse.data;
+        this.students = studentResponse.data;
+        this.students.forEach(s => this.studentDict[s.id] = s.name);
+        this.lessons = lessonResponse.data;
+      }))
+      .catch((err) => {
+        this.errors.push({id: 0, message: err, is_new: true});
+      });
+  }
+});
+
+{% include "ui/footer.html" %}
