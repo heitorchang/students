@@ -1,0 +1,4 @@
+Student
+model: records/models.py
+form html: classic/templates/classic/studentform.html
+vue object: classic/views.py (studentlist, studentdetail)

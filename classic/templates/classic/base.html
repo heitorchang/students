@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <link rel="shortcut icon" href="/static/img/favicon.ico">
+        <title>Key English</title>
+        <style>
+         @font-face {
+             font-family: ComingSoon;
+             src: url('/static/css/comingsoon.ttf') format('truetype');
+             font-style: normal;
+         }
+
+         .pink-icon-header {
+             line-height: 1;
+             background-color: #fac;
+         }
+
+         .section-header {
+             font-size: 1.6em;
+             font-weight: bold;
+         }
+
+         [v-cloak] {
+             display: none;
+         }
+         
+         body {
+             font-family: ComingSoon, sans-serif;
+             font-size: 1em;
+             height: 100%;
+             background-color: #ffdddd;
+             background-image: url('/static/img/hello_bg_pad.jpg');
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             background-position: top right;
+             background-size: auto 400px;             
+         }
+
+         /*------------------------------------
+            https://stackoverflow.com/questions/38792005/how-to-change-the-bootstrap-primary-color
+            Ling's answer
+            ------------------------------------*/
+         .alert-primary {
+             color: #0023aa;
+             background-color: #f2f4ff;
+             border-color: #dde4ff;
+         }
+         .alert-primary hr {
+             border-top-color: #c4d0ff;
+         }
+         .alert-primary .alert-link {
+             color: #001877;
+         }
+         .badge-primary {
+             color: #fff;
+             background-color: #2653ff;
+         }
+         .badge-primary[href]:hover, .badge-primary[href]:focus {
+             color: #fff;
+             background-color: #0032f2;
+         }
+         .bg-primary {
+             background-color: #2653ff !important;
+         }
+         a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
+             background-color: #0032f2 !important;
+         }
+         .border-primary {
+             border-color: #2653ff !important;
+         }
+         .btn-primary {
+             color: #fff;
+             background-color: #2653ff;
+             border-color: #2653ff;
+         }
+         .btn-primary:hover {
+             color: #fff;
+             background-color: #0236ff;
+             border-color: #0032f2;
+         }
+         .btn-primary:focus, .btn-primary.focus {
+             box-shadow: 0 0 0 0.2rem rgba(38, 83, 255, 0.5);
+         }
+         .btn-primary.disabled, .btn-primary:disabled {
+             color: #fff;
+             background-color: #2653ff;
+             border-color: #2653ff;
+         }
+         .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+             color: #fff;
+             background-color: #0032f2;
+             border-color: #002fe2;
+         }
+         .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+             box-shadow: 0 0 0 0.2rem rgba(38, 83, 255, 0.5);
+         }
+         .btn-outline-primary {
+             color: #2653ff;
+             background-color: transparent;
+             border-color: #2653ff;
+         }
+         .btn-outline-primary:hover {
+             color: #fff;
+             background-color: #2653ff;
+             border-color: #2653ff;
+         }
+         .btn-outline-primary:focus, .btn-outline-primary.focus {
+             box-shadow: 0 0 0 0.2rem rgba(38, 83, 255, 0.5);
+         }
+         .btn-outline-primary.disabled, .btn-outline-primary:disabled {
+             color: #2653ff;
+             background-color: transparent;
+         }
+         .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+             color: #fff;
+             background-color: #2653ff;
+             border-color: #2653ff;
+         }
+         .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+             box-shadow: 0 0 0 0.2rem rgba(38, 83, 255, 0.5);
+         }
+         .list-group-item-primary {
+             color: #0023aa;
+             background-color: #dde4ff;
+         }
+         .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
+             color: #0023aa;
+             background-color: #c4d0ff;
+         }
+         .list-group-item-primary.list-group-item-action.active {
+             color: #fff;
+             background-color: #0023aa;
+             border-color: #0023aa;
+         }
+         .table-primary, .table-primary > th, .table-primary > td {
+             background-color: #dde4ff;
+         }
+         .table-hover .table-primary:hover {
+             background-color: #c4d0ff;
+         }
+         .table-hover .table-primary:hover > td, .table-hover .table-primary:hover > th {
+             background-color: #c4d0ff;
+         }
+         .text-primary {
+             color: #2653ff !important;
+         }
+         a.text-primary:hover, a.text-primary:focus {
+             color: #0032f2 !important;
+         }
+
+        </style>
+    </head>
+    <body>
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="/classic/lessons/">
+                    <img src="/static/img/calendar.png" alt="cal"> Classes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{% if activetab == 'students' %} active{% endif %}" href="/classic/students/">
+                    <img src="/static/img/people.png" alt="ppl"> Students
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{% if activetab == 'profile' %} active{% endif %}" href="/admin/">
+                    <img src="/static/img/brandicon.png" alt="kitty"> Profile (Admin)
+                </a>
+            </li>
+        </ul>
+
+        <div class="container" id="app" v-cloak>
+            It is now {% now "H:i" %}<br>
+            {% block content %}{% endblock %}
+        </div>
+
+        
+        <script src="/static/js/bsbundle.js"></script>
+        <script src="/static/js/vue.js"></script>
+
+        {% block script %}
+        <script>
+         let app = new Vue({
+           el: "#app",
+           data: {
+             
+           },
+           
+           methods: {
+             
+           },
+
+           mounted() {
+             
+           },
+         });
+        </script>
+        {% endblock %}
+
+    </body>
+</html>

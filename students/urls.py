@@ -23,7 +23,8 @@ import django.contrib.auth.urls as auth_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('records/', include('records.urls'), name="records"),
-    path('ui/', include('ui.urls'), name="ui"),
-    path('', RedirectView.as_view(url="/ui/", permanent=False), name="index"),
+    path('records/', include('records.urls')),
+    path('ui/', include('ui.urls')),
+    path('classic/', include('classic.urls')),
+    path('', RedirectView.as_view(url="/classic/students/", permanent=False), name="index"),
 ]

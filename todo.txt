@@ -1,14 +1,17 @@
 began project as keyenglish on 4.oct.19 
 
 Backend
+[  ] do not pass teacher id from client, but use it from request user in django
 [  ] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] view to download only a month of lessons
 [  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
+[  ] figure out why Error: network error appears on adding student
 [OK] create model for notifications (created_at, due_at)
 [OK] archive student instead of deleting
 [OK] update notification's new status when dismissing it
+
 
 UI
 [  ] test add/edit interaction
