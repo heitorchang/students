@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'records',
     'accounts',
     'ui',
+    'classic',
 ]
 
 REST_FRAMEWORK = {

@@ -1,0 +1,10 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>Student list</h3>
+
+{% for student in students %}
+{{ student.id }} {{ student.name }} <br>
+{% endfor %}
+
+{% endblock %}
