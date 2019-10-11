@@ -7,6 +7,12 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico">
         <title>Key English</title>
         <style>
+         @font-face {
+             font-family: ComingSoon;
+             src: url('/static/css/comingsoon.ttf') format('truetype');
+             font-style: normal;
+         }
+
          .pink-icon-header {
              line-height: 1;
              background-color: #fac;
@@ -22,6 +28,8 @@
          }
          
          body {
+             font-family: ComingSoon, sans-serif;
+             font-size: 1em;
              height: 100%;
              background-color: #ffdddd;
              background-image: url('/static/img/hello_bg_pad.jpg');
@@ -165,6 +173,7 @@
         </ul>
 
         <div class="container" id="app" v-cloak>
+            It is now {% now "H:i" %}<br>
             {% block content %}{% endblock %}
         </div>
 

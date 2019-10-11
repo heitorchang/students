@@ -18,7 +18,7 @@
 
     <div class="form-group">
         <label for="studentWeekday">Recurring Class' Weekday</label>
-        <select class="form-control" id="studentWeekday" name="weekday">
+        <select class="form-control" id="studentWeekday" name="weekday" v-model="student.weekday">
             <option value="">Choose a weekday</option>
             <option value="0">Mon</option>
             <option value="1">Tue</option>
@@ -33,7 +33,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="studentHour">Class' Hour</label>
-            <select class="form-control" id="studentHour" name="hour">
+            <select class="form-control" id="studentHour" name="hour" v-model="student.hours">
                 <option value="">Choose the hour</option>
                 <option value="00">12 am</option>
                 <option value="01">1 am</option>
@@ -63,20 +63,20 @@
         </div>
         <div class="form-group col-md-6">
             <label for="studentMinutes">Minutes</label>
-            <select class="form-control" id="studentMinutes" name="minutes">
+            <select class="form-control" id="studentMinutes" name="minutes" v-model="student.minutes">
                 <option value="">minutes</option>
-                <option value=":00">:00</option>
-                <option value=":05">:05</option>
-                <option value=":10">:10</option>
-                <option value=":15">:15</option>
-                <option value=":20">:20</option>
-                <option value=":25">:25</option>
-                <option value=":30">:30</option>
-                <option value=":35">:35</option>
-                <option value=":40">:40</option>
-                <option value=":45">:45</option>
-                <option value=":50">:50</option>
-                <option value=":55">:55</option>
+                <option value=":00">00</option>
+                <option value=":05">05</option>
+                <option value=":10">10</option>
+                <option value=":15">15</option>
+                <option value=":20">20</option>
+                <option value=":25">25</option>
+                <option value=":30">30</option>
+                <option value=":35">35</option>
+                <option value=":40">40</option>
+                <option value=":45">45</option>
+                <option value=":50">50</option>
+                <option value=":55">55</option>
             </select>
         </div>
     </div>

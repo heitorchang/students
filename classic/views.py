@@ -37,6 +37,8 @@ def studentlist(request):
           email: '',
           weekday: '',
           time: '',
+          hours: '',
+          minutes: '',
         }
         """
 
@@ -78,10 +80,18 @@ def studentdetail(request, student_id):
         return redirect("classic:studentlist")
         
     else:        
-        if student.lesson_weekday:
-            student_weekday = day_abbr[student.lesson_weekday]
+        if student.lesson_weekday is not None:
+            student_weekday = student.lesson_weekday
         else:
             student_weekday = ''
+
+        if student.lesson_time is not None:
+            time_vals = str(student.lesson_time).split(":")
+            student_hours = time_vals[0]
+            student_minutes = ":" + time_vals[1]
+        else:
+            student_hours = ""
+            student_minutes = ""
         
         vueStudent = f"""
         student: {{
@@ -90,6 +100,8 @@ def studentdetail(request, student_id):
           email: '{student.email}',
           weekday: '{student_weekday}',
           time: '{student.lesson_time}',
+          hours: '{student_hours}',
+          minutes: '{student_minutes}',
         }}
         """
     
