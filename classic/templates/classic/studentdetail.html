@@ -1,0 +1,33 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>Student Details</h3>
+
+<a href="/classic/students/" class="btn btn-primary">Back to All Students</a>
+
+<a href="/classic/students/{{ studentId }}/confirm_delete/" class="btn btn-danger">Delete Student</a>
+
+{% include "classic/studentform.html" %}
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueStudent|safe }}
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     
+   },
+ });
+</script>
+{% endblock %}

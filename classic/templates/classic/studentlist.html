@@ -1,7 +1,9 @@
 {% extends "classic/base.html" %}
 
 {% block content %}
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+<h3>Student List</h3>
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addStudentModal">
     Add Student
 </button>
 
@@ -10,7 +12,7 @@
 <p>Student CARDS</p>
 
 {% for student in students %}
-{{ student.id }} {{ student.name }} {{ student.lesson_time }}<br>
+<a href="/classic/students/{{ student.id }}/">{{ student.id }} {{ student.name }} {{ student.lesson_time }}</a><br>
 {% endfor %}
 
 <!-- Add Student Modal -->
@@ -30,4 +32,23 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueStudent|safe }}
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     
+   },
+ });
+</script>
 {% endblock %}

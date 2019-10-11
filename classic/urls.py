@@ -7,13 +7,14 @@ urlpatterns = [
     # create one, read all
     path('students/', views.studentlist, name="studentlist"),
 
+    # read one, update one
+    path('students/<int:student_id>/', views.studentdetail, name="studentdetail"),
+
     # create one, read all
     path('lessons/', views.lessonlist, name="lessonlist"),
 ]
 
 """
-    # read one, update one
-    path('students/<int:student_id>/', views.studentdetail, name="studentdetail"),
 
     # delete one
     path('students/<int:student_id>/confirm_delete/', views.studentconfirmdelete, name="studentconfirmdelete"),

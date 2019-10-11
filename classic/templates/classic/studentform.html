@@ -2,23 +2,79 @@
     {% csrf_token %}
     <div class="form-group">
         <label for="studentName">Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Student's Name" required>
+        <input type="text" class="form-control" id="studentName" name="name" placeholder="Student's Name" required v-model="student.name">
     </div>
     <div class="form-group">
         <label for="studentPhone">Phone</label>
-        <input type="text" class="form-control" name="phone" placeholder="Student's Phone">
+        <input type="text" class="form-control" id="studentPhone" name="phone" placeholder="Student's Phone" v-model="student.phone">
     </div>
     <div class="form-group">
         <label for="studentEmail">Email</label>
-        <input type="text" class="form-control" name="email" placeholder="Student's Email">
+        <input type="text" class="form-control" id="studentEmail" name="email" placeholder="Student's Email" v-model="student.email">
     </div>
-    <div class="form-group">
-        <label for="studentWeekday">Recurring Weekday</label>
-        <input type="text" class="form-control" name="weekday" placeholder="Recurring Weekday">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="studentWeekday">Recurring Weekday</label>
+            <select class="form-control" id="studentWeekday" name="weekday">
+                <option value="-1">Choose a weekday</option>
+                <option value="0">Mon</option>
+                <option value="1">Tue</option>
+                <option value="2">Wed</option>
+                <option value="3">Thu</option>
+                <option value="4">Fri</option>
+                <option value="5">Sat</option>
+                <option value="6">Sun</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="studentHour">Hour</label>
+            <select class="form-control" id="studentHour" name="hour">
+                <option value="-1">Choose the hour</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>
+                <option value="00">12 am</option>                
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="studentMinutes">Minutes</label>
+            <select class="form-control" id="studentMinutes" name="minutes">
+                <option value="-1">minutes</option>
+                <option value="00">:00</option>
+                <option value="05">:05</option>
+                <option value="10">:10</option>
+                <option value="15">:15</option>
+                <option value="20">:20</option>
+                <option value="25">:25</option>
+                <option value="30">:30</option>
+                <option value="35">:35</option>
+                <option value="40">:40</option>
+                <option value="45">:45</option>
+                <option value="50">:50</option>
+                <option value="55">:55</option>
+            </select>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="studentTime">Recurring Time</label>
-        <input type="text" class="form-control" name="time" placeholder="Recurring Time">
-    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
+from calendar import day_abbr
 
-
-def studentlist(request):
+def studentlist(request):  
     if request.method == "POST":
         student_teacher = request.user
         student_name = request.POST['name']
@@ -29,10 +29,40 @@ def studentlist(request):
         return redirect("classic:studentlist")
     
     else:
+        vueStudent = """
+        student: {
+          name: '',
+          phone: '',
+          email: '',
+          weekday: '',
+          time: '',
+        }
+        """
+
         students = Student.objects.filter(teacher=request.user)
         return render(request, "classic/studentlist.html",
                       {'activetab': 'students',
-                       'students': students})
+                       'students': students,
+                       'vueStudent': vueStudent})
+
+
+def studentdetail(request, student_id):
+    student = Student.objects.get(id=student_id, teacher=request.user)
+
+    vueStudent = f"""
+    student: {{
+      name: '{student.name}',
+      phone: '{student.phone}',
+      email: '{student.email}',
+      weekday: '{day_abbr[student.lesson_weekday]}',
+      time: '{student.lesson_time}',
+    }}
+    """
+    
+    return render(request, "classic/studentdetail.html",
+                  {'activetab': 'students',
+                   'studentId': student_id,
+                   'vueStudent': vueStudent})
 
 
 def lessonlist(request):
