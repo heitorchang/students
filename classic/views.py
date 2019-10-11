@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from calendar import day_abbr
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def studentlist(request):  
     if request.method == "POST":
         student_teacher = request.user
@@ -50,6 +52,7 @@ def studentlist(request):
                        'vueStudent': vueStudent})
 
 
+@login_required
 def studentdetail(request, student_id):
     student = Student.objects.get(id=student_id, teacher=request.user)
 
@@ -111,5 +114,6 @@ def studentdetail(request, student_id):
                        'vueStudent': vueStudent})
 
 
+@login_required
 def lessonlist(request):
     return render(request, "classic/lessonlist.html", {'activetab': 'lessons'})
