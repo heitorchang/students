@@ -1,0 +1,24 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="studentName">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Student's Name" required>
+    </div>
+    <div class="form-group">
+        <label for="studentPhone">Phone</label>
+        <input type="text" class="form-control" name="phone" placeholder="Student's Phone">
+    </div>
+    <div class="form-group">
+        <label for="studentEmail">Email</label>
+        <input type="text" class="form-control" name="email" placeholder="Student's Email">
+    </div>
+    <div class="form-group">
+        <label for="studentWeekday">Recurring Weekday</label>
+        <input type="text" class="form-control" name="weekday" placeholder="Recurring Weekday">
+    </div>
+    <div class="form-group">
+        <label for="studentTime">Recurring Time</label>
+        <input type="text" class="form-control" name="time" placeholder="Recurring Time">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,10 +1,33 @@
 {% extends "classic/base.html" %}
 
 {% block content %}
-<h3>Student list</h3>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+    Add Student
+</button>
+
+<br>
+
+<p>Student CARDS</p>
 
 {% for student in students %}
-{{ student.id }} {{ student.name }} <br>
+{{ student.id }} {{ student.name }} {{ student.lesson_time }}<br>
 {% endfor %}
+
+<!-- Add Student Modal -->
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include "classic/studentform.html" %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
