@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from calendar import day_abbr
 from django.contrib.auth.decorators import login_required
+from unidecode import unidecode
 
 
 @login_required
@@ -29,6 +30,8 @@ def studentlist(request):
         """
 
         students = Student.objects.filter(teacher=request.user)
+        students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+        
         return render(request, "classic/studentlist.html",
                       {'activetab': 'students',
                        'students': students,

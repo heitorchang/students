@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions import Lower
 from django.contrib.auth.models import User
 from datetime import date
 from django.utils import timezone
@@ -15,7 +16,7 @@ class Student(models.Model):
     email = models.EmailField(blank=True)
 
     class Meta:
-        ordering = ['teacher', 'name']
+        ordering = ['teacher', Lower('name')]
         
     def __str__(self):
         return "{} ({})".format(self.name, self.teacher)
