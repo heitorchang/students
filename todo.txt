@@ -19,6 +19,7 @@ UI
 [  ] tempus dominus pickers
 [  ] student list shows next class as computed property
 [  ] Select dropdown for students
+[  ] Create custom admin page with password reset instead of link to admin
 [  ] Use vue min in bundle
 [OK] test add/edit interaction
 [OK] allow submitting blanks, remove "0", "anonymous" nonsense
