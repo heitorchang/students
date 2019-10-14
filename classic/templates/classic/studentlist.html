@@ -13,13 +13,7 @@
 <p>Student CARDS</p>
 
 {% for student in students %}
-<a href="/classic/students/{{ student.id }}/">{{ student.id }} {{ student.name }} {{ student.phone }} {{ student.email }}
-
-    {% if student.lesson_weekday is not None %}
-    {{ day_abbr|index:student.lesson_weekday }}
-    {% endif %}
-    
-    {{ student.lesson_time }}</a><br>
+<a href="/classic/students/{{ student.id }}/">{{ student.id }} {{ student.name }} {{ student.phone }} {{ student.email }}</a><br>
 {% endfor %}
 
 <!-- Add Student Modal -->
