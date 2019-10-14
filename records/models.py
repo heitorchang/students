@@ -13,9 +13,6 @@ class Student(models.Model):
     name = models.CharField(max_length=80)
     phone = models.CharField(max_length=30, blank=True)
     email = models.EmailField(blank=True)
-    lesson_weekday = models.IntegerField(blank=True, null=True)  # 0 = Monday
-    lesson_time = models.TimeField(blank=True, null=True)
-    archived = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['teacher', 'name']
