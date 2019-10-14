@@ -1,6 +1,8 @@
 began project as keyenglish on 4.oct.19 
 
 Backend
+[  ] remove default class and hidden from student model
+[  ] does ui deleting student delete associated classes?
 [  ] do not pass teacher id from client, but use it from request user in django
 [  ] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
 [  ] check for time conflict when adding a class
@@ -14,6 +16,8 @@ Backend
 
 
 UI
+[  ] tempus dominus pickers
+[  ] disable submit button on press (try vanilla js)
 [  ] test add/edit interaction
 [  ] close modal in finally block?
 [  ] allow submitting blanks, remove "0", "anonymous" nonsense
@@ -29,6 +33,7 @@ UI
 [  ] remove JS alerts
 [OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
+
 
 Display
 [OK] modify Bootstrap primary colors (used 3rd-party online tool)
