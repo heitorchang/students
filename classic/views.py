@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from django.contrib.auth.decorators import login_required
@@ -98,8 +98,8 @@ def lessonlist(request):
         lesson_notes = request.POST['notes']
 
         student = Student.objects.get(id=lesson_student, teacher=request.user)
-        day_fmt = "%d/%m/%Y"
-        time_fmt = "%I:%M %p"
+        day_fmt = "%Y-%m-%d"
+        time_fmt = "%H:%M"
         
         day_at = datetime.strptime(lesson_day, day_fmt)
         start_at = datetime.strptime(lesson_start, time_fmt)
@@ -114,22 +114,13 @@ def lessonlist(request):
         return redirect("classic:lessonlist")
     
     else:
-        now = datetime.now()
-        hr = now.hour
-        if hr > 12:
-            ampm = "PM"
-        else:
-            ampm = "AM"
-
-        fixedhr = '{}:00 {}'.format(hr, ampm) 
-            
         vueLesson = f"""
         lesson: {{
           student: '',
           day: '',
-          start: '{fixedhr}',
-          end: '',
-          notes: '',
+          start: '',
+          duration: '60',
+          notes: ``,
         }}
         """
 
@@ -152,26 +143,40 @@ def lessondetail(request, lesson_id):
 
     if request.method == "POST":
         new_teacher = request.user
-        new_name = request.POST['name']
-        new_phone = request.POST['phone']
-        new_email = request.POST['email']
+        new_student = int(request.POST['student'])
+        new_day = request.POST['day']
+        new_start = request.POST['start']
+        new_duration = int(request.POST['duration'])
+        new_notes = request.POST['notes']
+
+        student = Student.objects.get(id=new_student, teacher=request.user)
+        day_fmt = "%Y-%m-%d"
+        time_fmt = "%H:%M"
+        
+        new_day_at = datetime.strptime(new_day, day_fmt)
+        new_start_at = datetime.strptime(new_start, time_fmt)
+        new_end_at = new_start_at + timedelta(minutes=new_duration)
 
         lesson.teacher = new_teacher
-        lesson.name = new_name
-        lesson.phone = new_phone
-        lesson.email = new_email
+        lesson.student = student
+        lesson.day = new_day_at
+        lesson.start_time = new_start_at
+        lesson.end_time = new_end_at
+        lesson.notes = new_notes
         lesson.save()
         
         return redirect("classic:lessonlist")
         
-    else:        
+    else:
+        duration = (datetime.combine(date.min, lesson.end_time) -
+                    datetime.combine(date.min, lesson.start_time)).seconds // 60
         vueLesson = f"""
         lesson: {{
           student: '{lesson.student.id}',
           day: '{lesson.day}',
           start: '{lesson.start_time}',
-          end: '{lesson.end_time}',
-          notes: '{lesson.notes}',
+          duration: '{duration}',
+          notes: `{lesson.notes}`,
         }}
         """
     
