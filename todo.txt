@@ -1,38 +1,37 @@
 began project as keyenglish on 4.oct.19 
 
 Backend
-[  ] remove default class and hidden from student model
-[  ] does ui deleting student delete associated classes?
-[  ] do not pass teacher id from client, but use it from request user in django
-[  ] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] view to download only a month of lessons
-[  ] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading
-[  ] figure out why Error: network error appears on adding student
+[OK] remove default class and hidden from student model
+[OK] does ui deleting student delete associated classes?
+[OK] do not pass teacher id from client, but use it from request user in django
 [OK] create model for notifications (created_at, due_at)
 [OK] archive student instead of deleting
 [OK] update notification's new status when dismissing it
+[NO] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
+[NO] figure out why Error: network error appears on adding student. No SPA
+[NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
 
 
 UI
 [  ] tempus dominus pickers
-[  ] disable submit button on press (try vanilla js)
-[  ] test add/edit interaction
-[  ] close modal in finally block?
-[  ] allow submitting blanks, remove "0", "anonymous" nonsense
-[  ] toast after successful add/edit
-[  ] disable submit button on modals while network processes it
 [  ] student list shows next class as computed property
-[  ] prev/next link in monthly component, should download new data
 [  ] Select dropdown for students
-[  ] get mm for monthly from $parent, not prop
-[  ] replace vue js with min version
-[  ] block screen while saving JSON
 [  ] Use vue min in bundle
-[  ] remove JS alerts
+[OK] test add/edit interaction
+[OK] allow submitting blanks, remove "0", "anonymous" nonsense
+[OK] remove JS alerts
 [OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
+[NO] close modal in finally block?
+[NO] toast after successful add/edit
+[NO] disable submit button on modals while network processes it
+[NO] prev/next link in monthly component, should download new data
+[NO] get mm for monthly from $parent, not prop
+[NO] block screen while saving JSON
+[NO] disable submit button on press (try vanilla js). Changing text instead
 
 
 Display
