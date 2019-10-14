@@ -54,13 +54,13 @@ Tap on a class' header to edit its info.
    data: {
      {{ vueLesson|safe }}
    },
-   
+
    methods: {
-     
+
    },
 
    mounted() {
-     
+     $('#lessonDay').datetimepicker({format: 'L'});
    },
  });
 </script>

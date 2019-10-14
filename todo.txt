@@ -16,6 +16,7 @@ Backend
 
 
 UI
+[  ] bundle tempus dominus if it's good
 [  ] background JS checks "now" vs. "page loaded" and display a refresh button
 [  ] tempus dominus pickers
 [  ] remove "it is now ..." time info from base.html

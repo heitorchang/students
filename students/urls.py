@@ -26,5 +26,5 @@ urlpatterns = [
     path('records/', include('records.urls')),
     path('ui/', include('ui.urls')),
     path('classic/', include('classic.urls')),
-    path('', RedirectView.as_view(url="/classic/students/", permanent=False), name="index"),
+    path('', RedirectView.as_view(url="/classic/classes/", permanent=False), name="index"),
 ]

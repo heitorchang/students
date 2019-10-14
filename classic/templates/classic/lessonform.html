@@ -13,7 +13,7 @@
 
     <div class="form-group">
         <label for="lessonDay">Class' Day</label>
-        <input type="text" class="form-control" id="lessonDay" name="day" placeholder="Day" v-model="lesson.day">
+        <input type="text" class="form-control datepicker-input" id="lessonDay" name="day" data-toggle="datetimepicker" data-target="#lessonDay" v-model="lesson.day">
     </div>
 
     <button id="submitLesson" type="submit" class="btn btn-primary">Submit</button>
