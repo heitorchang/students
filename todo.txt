@@ -19,6 +19,7 @@ UI
 [  ] tempus dominus pickers
 [  ] student list shows next class as computed property
 [  ] Select dropdown for students
+[  ] Brand login page
 [  ] Create custom admin page with password reset instead of link to admin
 [  ] Use vue min in bundle
 [OK] test add/edit interaction
