@@ -32,7 +32,7 @@ class Lesson(models.Model):
     notified = models.BooleanField(default=False)
     
     class Meta:
-        ordering = ['teacher']
+        ordering = ['teacher', 'day', 'start_time']
         
     def __str__(self):
         return "{} {} to {}".format(self.student, format_lesson_time(self.start_at), format_lesson_time(self.end_at))

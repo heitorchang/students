@@ -170,11 +170,13 @@ def lessondetail(request, lesson_id):
     else:
         duration = (datetime.combine(date.min, lesson.end_time) -
                     datetime.combine(date.min, lesson.start_time)).seconds // 60
+        formatted_start_time = datetime.strftime(datetime.combine(date.min, lesson.start_time), "%H:%M")
+        
         vueLesson = f"""
         lesson: {{
           student: '{lesson.student.id}',
           day: '{lesson.day}',
-          start: '{lesson.start_time}',
+          start: '{formatted_start_time}',
           duration: '{duration}',
           notes: `{lesson.notes}`,
         }}
