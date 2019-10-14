@@ -17,6 +17,7 @@ Backend
 
 UI
 [  ] tempus dominus pickers
+[  ] remove "it is now ..." time info from base.html
 [  ] student list shows next class as computed property
 [  ] Select dropdown for students
 [  ] Brand login page
