@@ -1,4 +1,4 @@
-<form method="POST" onsubmit="document.getElementById('submitStudent').disabled=true;">
+<form method="POST" onsubmit="document.getElementById('submitStudent').innerText='Please wait';">
     {% csrf_token %}
 
     <div class="form-group">

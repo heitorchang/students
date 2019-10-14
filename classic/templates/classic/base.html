@@ -151,23 +151,27 @@
              color: #0032f2 !important;
          }
 
+         .card {
+             background-color: rgba(255, 0, 120, 0.2);
+         }
+
         </style>
     </head>
     <body>
         <ul class="nav nav-pills justify-content-center">
             <li class="nav-item">
                 <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="/classic/lessons/">
-                    <img src="/static/img/calendar.png" alt="cal"> Classes
+                    <img src="/static/img/calendar.png" alt="cal"> <small>Class</small>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link{% if activetab == 'students' %} active{% endif %}" href="/classic/students/">
-                    <img src="/static/img/people.png" alt="ppl"> Students
+                    <img src="/static/img/people.png" alt="ppl"> <small>Student</small>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link{% if activetab == 'profile' %} active{% endif %}" href="/admin/">
-                    <img src="/static/img/brandicon.png" alt="kitty"> Profile (Admin)
+                    <img src="/static/img/brandicon.png" alt="kitty"> <small>Me</small>
                 </a>
             </li>
         </ul>
@@ -177,6 +181,9 @@
             {% block content %}{% endblock %}
         </div>
 
+        <div class="container">
+            <br><br><br>
+        </div>
         
         <script src="/static/js/bsbundle.js"></script>
         <script src="/static/js/vue.js"></script>

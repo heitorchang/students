@@ -68,7 +68,23 @@ def studentdetail(request, student_id):
                        'studentId': student_id,
                        'vueStudent': vueStudent})
 
+    
+@login_required
+def studentconfirmdelete(request, student_id):
+    student = Student.objects.get(id=student_id, teacher=request.user)
 
+    return render(request, "classic/studentconfirmdelete.html",
+                  {'studentId': student_id,
+                   'studentName': student.name})
+
+
+@login_required
+def studentdelete(request, student_id):
+    student = Student.objects.get(id=student_id, teacher=request.user)
+    student.delete()
+    return redirect("classic:studentlist")
+
+    
 @login_required
 def lessonlist(request):
     return render(request, "classic/lessonlist.html", {'activetab': 'lessons'})

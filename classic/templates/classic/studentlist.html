@@ -2,18 +2,29 @@
 {% load index %}
 
 {% block content %}
-<h3>Student List</h3>
+<h3>My Students</h3>
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addStudentModal">
     Add Student
 </button>
 
-<br>
+<br><br>
 
-<p>Student CARDS</p>
+Tap on a student's name to edit his or her info.
 
 {% for student in students %}
-<a href="/classic/students/{{ student.id }}/">{{ student.id }} {{ student.name }} {{ student.phone }} {{ student.email }}</a><br>
+<div class="card mt-3">
+    <div class="card-header">
+        <a href="/classic/students/{{ student.id }}/" class="h4">{{ student.name }}</a>
+        <a href="#" class="btn btn-primary float-right">Add class</a>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {{ student.phone }}<br>
+            {{ student.email }}
+        </p>
+    </div>
+</div>
 {% endfor %}
 
 <!-- Add Student Modal -->
