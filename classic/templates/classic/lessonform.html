@@ -1,0 +1,20 @@
+<form method="POST" onsubmit="document.getElementById('submitLesson').innerText='Please wait';">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="lessonStudent">Student</label>
+        <select class="form-control" id="lessonStudent" name="student" v-model="lesson.student">
+            <option value="">Choose a Student</option>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="lessonDay">Class' Day</label>
+        <input type="text" class="form-control" id="lessonDay" name="day" placeholder="Day" v-model="lesson.day">
+    </div>
+
+    <button id="submitLesson" type="submit" class="btn btn-primary">Submit</button>
+</form>

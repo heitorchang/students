@@ -25,13 +25,14 @@ class Student(models.Model):
 class Lesson(models.Model):
     teacher = models.ForeignKey(User, related_name="records_lessons", on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name="records_lessons", on_delete=models.CASCADE)
-    start_at = models.DateTimeField()
-    end_at = models.DateTimeField()
+    day = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     notes = models.TextField(blank=True)
     notified = models.BooleanField(default=False)
     
     class Meta:
-        ordering = ['teacher', 'start_at']
+        ordering = ['teacher']
         
     def __str__(self):
         return "{} {} to {}".format(self.student, format_lesson_time(self.start_at), format_lesson_time(self.end_at))

@@ -10,13 +10,14 @@ urlpatterns = [
     # read one, update one
     path('students/<int:student_id>/', views.studentdetail, name="studentdetail"),
 
-    # create one, read all
-    path('lessons/', views.lessonlist, name="lessonlist"),
-
     # delete one
     path('students/<int:student_id>/confirm_delete/', views.studentconfirmdelete, name="studentconfirmdelete"),
     
     path('students/<int:student_id>/delete/', views.studentdelete, name="studentdelete"),
+
+
+    # Lessons
+    path('classes/', views.lessonlist, name="lessonlist"),
 
 ]
 
