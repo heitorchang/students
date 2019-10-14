@@ -19,5 +19,12 @@ urlpatterns = [
     # Lessons
     path('classes/', views.lessonlist, name="lessonlist"),
 
+    # read one, update one
+    path('classes/<int:lesson_id>/', views.lessondetail, name="lessondetail"),
+
+    # delete one
+    path('classes/<int:lesson_id>/confirm_delete/', views.lessonconfirmdelete, name="lessonconfirmdelete"),
+    
+    path('classes/<int:lesson_id>/delete/', views.lessondelete, name="lessondelete"),
 ]
 

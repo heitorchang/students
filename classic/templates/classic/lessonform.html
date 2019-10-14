@@ -3,17 +3,38 @@
 
     <div class="form-group">
         <label for="lessonStudent">Student</label>
-        <select class="form-control" id="lessonStudent" name="student" v-model="lesson.student">
+        <select class="form-control" id="lessonStudent" name="student" v-model="lesson.student" required>
             <option value="">Choose a Student</option>
             {% for student in students %}
             <option value="{{ student.id }}">{{ student.name }}</option>
             {% endfor %}
         </select>
     </div>
-
+    
     <div class="form-group">
         <label for="lessonDay">Class' Day</label>
-        <input type="text" class="form-control datepicker-input" id="lessonDay" name="day" data-toggle="datetimepicker" data-target="#lessonDay" v-model="lesson.day">
+        <input type="date" class="form-control" id="lessonDay" name="day" v-model="lesson.day" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="lessonStart">Class' Start Time</label>
+        <input type="time" class="form-control" id="lessonStart" name="start" v-model="lesson.start">
+    </div>
+
+    <div class="form-group">
+        <label for="lessonDuration">Class' Duration</label>
+        <select class="form-control" id="lessonDuration" name="duration" v-model="lesson.duration" required>
+            <option value="60" selected>1 hour</option>
+            <option value="90">1 hour and 30 minutes</option>
+            <option value="120">2 hours</option>
+            <option value="150">2 hours and 30 minutes</option>
+            <option value="180">3 hours</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="lessonNotes">Notes</label>
+        <textarea class="form-control" name="notes" id="lessonNotes" rows="3" v-model="lesson.notes"></textarea>
     </div>
 
     <button id="submitLesson" type="submit" class="btn btn-primary">Submit</button>

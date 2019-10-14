@@ -17,8 +17,7 @@ Tap on a class' header to edit its info.
 {% for lesson in lessons %}
 <div class="card mt-3">
     <div class="card-header">
-        <a href="/classic/classes/{{ lesson.id }}/" class="h4">{{ lesson.student.name }}</a>
-        <a href="#" class="btn btn-primary float-right">Add class</a>
+        <a href="/classic/classes/{{ lesson.id }}/" class="h4">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_time }}</a>
     </div>
     <div class="card-body">
         <p class="card-text">
@@ -60,7 +59,7 @@ Tap on a class' header to edit its info.
    },
 
    mounted() {
-     $('#lessonDay').datetimepicker({format: 'L'});
+
    },
  });
 </script>
