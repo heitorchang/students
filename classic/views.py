@@ -76,7 +76,8 @@ def studentconfirmdelete(request, student_id):
     student = Student.objects.get(id=student_id, teacher=request.user)
 
     return render(request, "classic/studentconfirmdelete.html",
-                  {'studentId': student_id,
+                  {'activetab': 'students',
+                   'studentId': student_id,
                    'studentName': student.name})
 
 
@@ -188,13 +189,60 @@ def lessondetail(request, lesson_id):
                        'students': students,
                        'vueLesson': vueLesson})
 
+
+@login_required
+def lessonforstudent(request, student_id):
+    students = Student.objects.filter(teacher=request.user)
+    students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+    if request.method == "POST":
+        new_teacher = request.user
+        new_student = int(request.POST['student'])
+        new_day = request.POST['day']
+        new_start = request.POST['start']
+        new_duration = int(request.POST['duration'])
+        new_notes = request.POST['notes']
+
+        student = Student.objects.get(id=new_student, teacher=request.user)
+        day_fmt = "%Y-%m-%d"
+        time_fmt = "%H:%M"
+        
+        new_day_at = datetime.strptime(new_day, day_fmt)
+        new_start_at = datetime.strptime(new_start, time_fmt)
+        new_end_at = new_start_at + timedelta(minutes=new_duration)
+
+        Lesson.objects.create(teacher=new_teacher,
+                              student=student,
+                              day=new_day_at,
+                              start_time=new_start_at,
+                              end_time=new_end_at,
+                              notes=new_notes)
+        return redirect("classic:lessonlist")
+        
+    else:
+        vueLesson = f"""
+        lesson: {{
+          student: '{student_id}',
+          day: '',
+          start: '',
+          duration: '60',
+          notes: ``,
+        }}
+        """
+    
+        return render(request, "classic/lessonforstudent.html",
+                      {'activetab': 'lessons',
+                       'students': students,
+                       'vueLesson': vueLesson})
+
     
 @login_required
 def lessonconfirmdelete(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id, teacher=request.user)
 
     return render(request, "classic/lessonconfirmdelete.html",
-                  {'lessonId': lesson_id,
+                  {'activetab': 'lessons',
+                   'lessonId': lesson_id,
                    'lessonName': lesson.name})
 
 

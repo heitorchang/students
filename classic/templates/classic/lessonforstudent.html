@@ -1,0 +1,31 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>Add Class</h3>
+
+<a href="/classic/students/" class="btn btn-primary">Back to All Students</a>
+
+{% include "classic/lessonform.html" %}
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueLesson|safe }}
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     
+   },
+ });
+</script>
+{% endblock %}

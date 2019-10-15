@@ -17,7 +17,7 @@ Tap on a class' header to edit its info.
 {% for lesson in lessons %}
 <div class="card mt-3">
     <div class="card-header">
-        <a href="/classic/classes/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_time }}</a>
+        <a href="/classic/classes/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_time }} - {{ lesson.end_time }}</a>
     </div>
     <div class="card-body">
         <p class="card-text">
@@ -28,12 +28,12 @@ Tap on a class' header to edit its info.
 </div>
 {% endfor %}
 
-<!-- Add Lesson Modal -->
+<!-- Add Class Modal -->
 <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addLessonModalLabel">Add Lesson</h5>
+                <h5 class="modal-title" id="addLessonModalLabel">Add Class</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
