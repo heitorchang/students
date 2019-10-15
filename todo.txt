@@ -14,10 +14,10 @@ Backend
 
 UI
 [  ] view next 15 days classes (card with Mon, Oct. 7 as header, list in body)
-[  ] class detail uses html tooltip to show notes
-[  ] student detail shows all classes
+[  ] summary of classes uses html tooltip to show notes, replace " with '
+[  ] class detail, button for edit
+[  ] student detail shows all classes, add button for edit
 [  ] view for month classes (list view and forward/back links)
-[  ] background JS checks "now" vs. "page loaded" and display a refresh button
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] themed login page
@@ -28,7 +28,7 @@ UI
 [OK] modify Bootstrap primary colors (used 3rd-party online tool)
 [OK] hello kitty template
 [OK] add v-cloak to app section tag
-[NO] bundle css files
+[NO] background JS checks "now" vs. "page loaded" and display a refresh button
 [NO] close modal in finally block?
 [NO] toast after successful add/edit
 [NO] disable submit button on modals while network processes it
