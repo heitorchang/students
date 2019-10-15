@@ -29,5 +29,8 @@ urlpatterns = [
     path('classes/<int:lesson_id>/confirm_delete/', views.lessonconfirmdelete, name="lessonconfirmdelete"),
     
     path('classes/<int:lesson_id>/delete/', views.lessondelete, name="lessondelete"),
+
+    # Profile
+    path('profile/', views.profile, name="profile"),
 ]
 

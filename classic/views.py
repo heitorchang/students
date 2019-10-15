@@ -251,3 +251,10 @@ def lessondelete(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id, teacher=request.user)
     lesson.delete()
     return redirect("classic:lessonlist")
+
+
+@login_required
+def profile(request):
+    return render(request, "classic/profile.html",
+                  {'activetab': 'profile',
+                   'username': request.user.username})

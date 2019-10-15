@@ -15,7 +15,7 @@ Backend
 UI
 [  ] background JS checks "now" vs. "page loaded" and display a refresh button
 [  ] student list shows next class as computed property
-[  ] create custom admin page with password reset instead of link to admin
+[OK] create custom admin page with password reset instead of link to admin
 [OK] themed login page
 [OK] use vue min in bundle
 [OK] manually test add/edit interaction

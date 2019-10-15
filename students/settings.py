@@ -31,6 +31,10 @@ SESSION_COOKIE_AGE = 6 * 1209600  # 12 weeks
 # Application definition
 
 INSTALLED_APPS = [
+    'records',
+    'accounts',
+    'ui',
+    'classic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'records',
-    'accounts',
-    'ui',
-    'classic',
 ]
 
 REST_FRAMEWORK = {

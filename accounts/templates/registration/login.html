@@ -9,14 +9,7 @@
     <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    {% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.</p>
-    {% endif %}
-    {% endif %}
-
-    <form method="POST" action="{% url 'login' %}" onsubmit="document.getElementById('submitUser').innerText='Please wait';">
+    <form method="post" action="{% url 'login' %}" onsubmit="document.getElementById('submitUser').innerText='Please wait';">
         {% csrf_token %}
 
         <div class="form-group">
@@ -38,14 +31,10 @@
     <small>Contact the site administrator if you forgot your password.</small>
 </div>
 
-{% endblock %}
-
-
 <!--
      <p><a href="{% url 'password_reset' %}">Reset password</a></p>
 -->
 
-</center>
-</div>
-</body>
-</html>
+{% endblock %}
+
+

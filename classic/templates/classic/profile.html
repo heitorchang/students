@@ -1,0 +1,9 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>{{ username }}'s Profile</h3>
+
+<a href="/accounts/password_change/" class="btn btn-primary">Change My Password</a>
+<br><br>
+<a href="/accounts/logout/" class="btn btn-secondary">Logout</a>
+{% endblock %}
