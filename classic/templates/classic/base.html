@@ -158,8 +158,9 @@
         </style>
     </head>
     <body>
-        <script src="/static/js/bsmbundle.js"></script>
-        
+        <script src="/static/js/jqbspv.js"></script>
+
+        {% if request.user.is_authenticated  %}
         <ul class="nav nav-pills justify-content-center">
             <li class="nav-item">
                 <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="/classic/classes/">
@@ -177,9 +178,9 @@
                 </a>
             </li>
         </ul>
+        {% endif %}
 
         <div class="container" id="app" v-cloak>
-            It is now {% now "H:i" %}<br>
             {% block content %}{% endblock %}
         </div>
 
@@ -187,8 +188,6 @@
             <br><br><br>
         </div>
         
-        <script src="/static/js/vue.js"></script>
-
         {% block script %}
         <script>
          let app = new Vue({

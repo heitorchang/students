@@ -1,3 +1,5 @@
+began project as keyenglish on 4.oct.19 
+
 Student
 model: records/models.py
 form html: classic/templates/classic/studentform.html

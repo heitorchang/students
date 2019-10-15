@@ -1,36 +1,30 @@
-began project as keyenglish on 4.oct.19 
-
 Backend
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
 [  ] view to download only a month of lessons
 [OK] remove default class and hidden from student model
-[OK] does ui deleting student delete associated classes?
 [OK] do not pass teacher id from client, but use it from request user in django
 [OK] create model for notifications (created_at, due_at)
 [OK] archive student instead of deleting
 [OK] update notification's new status when dismissing it
-[NO] handle AJAX error codes (400 bad request when making new student), error notifications after AJAX calls (grep -Iir 'then' * in ui/templates dir)
+[NO] handle AJAX error codes (400 bad request when adding) after then
 [NO] figure out why Error: network error appears on adding student. No SPA
 [NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
 
 
 UI
-[  ] bundle tempus dominus if it's good
-[  ] bundle css files
 [  ] background JS checks "now" vs. "page loaded" and display a refresh button
-[  ] tempus dominus pickers
-[  ] remove "it is now ..." time info from base.html
 [  ] student list shows next class as computed property
-[  ] Select dropdown for students
-[  ] Brand login page
-[  ] Create custom admin page with password reset instead of link to admin
-[  ] Use vue min in bundle
-[OK] test add/edit interaction
-[OK] allow submitting blanks, remove "0", "anonymous" nonsense
-[OK] remove JS alerts
+[  ] create custom admin page with password reset instead of link to admin
+[OK] themed login page
+[OK] use vue min in bundle
+[OK] manually test add/edit interaction
 [OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
+[OK] modify Bootstrap primary colors (used 3rd-party online tool)
+[OK] hello kitty template
+[OK] add v-cloak to app section tag
+[NO] bundle css files
 [NO] close modal in finally block?
 [NO] toast after successful add/edit
 [NO] disable submit button on modals while network processes it
@@ -38,10 +32,3 @@ UI
 [NO] get mm for monthly from $parent, not prop
 [NO] block screen while saving JSON
 [NO] disable submit button on press (try vanilla js). Changing text instead
-
-
-Display
-[OK] modify Bootstrap primary colors (used 3rd-party online tool)
-[OK] hello kitty template
-[OK] hello kitty favicon
-[OK] add v-cloak to app section tag
