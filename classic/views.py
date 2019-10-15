@@ -250,3 +250,8 @@ def profile(request):
     return render(request, "classic/profile.html",
                   {'activetab': 'profile',
                    'username': request.user.username})
+
+
+@login_required
+def lessonthismonth(request):
+    return render(request, "classic/lessonthismonth.html")
