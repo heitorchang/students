@@ -1,20 +1,24 @@
 Backend
 [  ] check for time conflict when adding a class
 [  ] monthly report of classes
-[  ] view to download only a month of lessons
 [OK] remove default class and hidden from student model
 [OK] do not pass teacher id from client, but use it from request user in django
 [OK] create model for notifications (created_at, due_at)
 [OK] archive student instead of deleting
 [OK] update notification's new status when dismissing it
+[NO] view to download only a month of lessons
 [NO] handle AJAX error codes (400 bad request when adding) after then
 [NO] figure out why Error: network error appears on adding student. No SPA
 [NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
 
 
 UI
+[  ] view next 15 days classes (card with Mon, Oct. 7 as header, list in body)
+[  ] class detail uses html tooltip to show notes
+[  ] student detail shows all classes
+[  ] view for month classes (list view and forward/back links)
 [  ] background JS checks "now" vs. "page loaded" and display a refresh button
-[  ] student list shows next class as computed property
+[OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] themed login page
 [OK] use vue min in bundle
