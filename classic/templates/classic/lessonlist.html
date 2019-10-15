@@ -20,10 +20,11 @@ Tap on a class' header to edit its info.
         <a href="/classic/classes/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_at }} ({{ lesson.duration }} mins)</a>
     </div>
     <div class="card-body">
+        {% if lesson.notes %}
         <p class="card-text">
-            {{ lesson.day }} {{ lesson.start_time }} - {{ lesson.end_time }}<br>
-            {{ lesson.notes }}
+            <b>Notes:</b> {{ lesson.notes }}
         </p>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

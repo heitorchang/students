@@ -1,0 +1,15 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>Confirm Class Deletion</h3>
+
+Really delete {{ lesson.student.name }} - {{ lesson.start_at }}?
+<br><br>
+
+<a href="/classic/classes/{{ lessonId }}/delete/" class="btn btn-danger">Yes, Delete Class</a>
+
+<br><br><br>
+
+<a href="/classic/classes/" class="btn btn-secondary">Cancel</a>
+
+{% endblock %}

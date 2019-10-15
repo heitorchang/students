@@ -23,10 +23,10 @@ Tap on a student's name to edit his or her info.
     </div>
     <div class="card-body">
         <p class="card-text">
-            {{ student.phone }}<br>
-            {{ student.email }}<br>
+            {% if student.phone %} {{ student.phone }}<br> {% endif %}
+            {% if student.email %} {{ student.email }}<br> {% endif %}
             {% if student.nextLesson %}
-            Next Class: {{ student.nextLesson }}
+            <b>Next Class:</b> {{ student.nextLesson.start_at|date:"D, M jS, g:i a" }} ({{ student.nextLesson.duration }} mins)
             {% endif %}
         </p>
     </div>

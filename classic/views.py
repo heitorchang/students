@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from django.contrib.auth.decorators import login_required
 from unidecode import unidecode
-from django.utils import timezone
+# from django.utils import timezone
 
 
 @login_required
@@ -33,7 +33,7 @@ def studentlist(request):
         students = Student.objects.filter(teacher=request.user)
         students = sorted(students, key=lambda s: unidecode(s.name.lower()))
 
-        page_loaded = timezone.now()
+        page_loaded = datetime.now()
         
         return render(request, "classic/studentlist.html",
                       {'activetab': 'students',
@@ -165,9 +165,8 @@ def lessondetail(request, lesson_id):
         return redirect("classic:lessonlist")
         
     else:
-        local_start_at = timezone.localtime(lesson.start_at)
-        lesson_day = datetime.strftime(local_start_at, "%Y-%m-%d")
-        lesson_start_time = datetime.strftime(local_start_at, "%H:%M")
+        lesson_day = datetime.strftime(lesson.start_at, "%Y-%m-%d")
+        lesson_start_time = datetime.strftime(lesson.start_at, "%H:%M")
         
         vueLesson = f"""
         lesson: {{
@@ -236,7 +235,7 @@ def lessonconfirmdelete(request, lesson_id):
     return render(request, "classic/lessonconfirmdelete.html",
                   {'activetab': 'lessons',
                    'lessonId': lesson_id,
-                   'lessonName': lesson.name})
+                   'lesson': lesson})
 
 
 @login_required

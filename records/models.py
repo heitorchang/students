@@ -2,11 +2,12 @@ from django.db import models
 from django.db.models.functions import Lower
 from django.contrib.auth.models import User
 from datetime import datetime, date, time
-from django.utils import timezone
+# from django.utils import timezone
 
 
 def format_lesson_time(t):
-    return timezone.localtime(t).strftime("%d/%m/%Y %H:%M")
+    # return timezone.localtime(t).strftime("%d/%m/%Y %H:%M")
+    return t
 
 
 class Student(models.Model):
@@ -16,7 +17,7 @@ class Student(models.Model):
     email = models.EmailField(blank=True)
 
     def nextLesson(self):
-        now = timezone.now()
+        now = datetime.now()
         return self.records_lessons.filter(student=self, start_at__gte=now).first()
     
     class Meta:
