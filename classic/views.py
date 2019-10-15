@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from django.contrib.auth.decorators import login_required
 from unidecode import unidecode
+from django.utils import timezone
 
 
 @login_required
@@ -31,10 +32,13 @@ def studentlist(request):
 
         students = Student.objects.filter(teacher=request.user)
         students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+        page_loaded = timezone.now()
         
         return render(request, "classic/studentlist.html",
                       {'activetab': 'students',
                        'students': students,
+                       'page_loaded': page_loaded,
                        'vueStudent': vueStudent})
 
 
@@ -99,18 +103,14 @@ def lessonlist(request):
         lesson_notes = request.POST['notes']
 
         student = Student.objects.get(id=lesson_student, teacher=request.user)
-        day_fmt = "%Y-%m-%d"
-        time_fmt = "%H:%M"
+        start_at_fmt = "%Y-%m-%d %H:%M"
         
-        day_at = datetime.strptime(lesson_day, day_fmt)
-        start_at = datetime.strptime(lesson_start, time_fmt)
-        end_at = start_at + timedelta(minutes=lesson_duration)
+        start_at = datetime.strptime(lesson_day + " " + lesson_start, start_at_fmt)
 
         Lesson.objects.create(teacher=lesson_teacher,
                               student=student,
-                              day=day_at,
-                              start_time=start_at,
-                              end_time=end_at,
+                              start_at=start_at,
+                              duration=lesson_duration,
                               notes=lesson_notes)
         return redirect("classic:lessonlist")
     
@@ -151,34 +151,30 @@ def lessondetail(request, lesson_id):
         new_notes = request.POST['notes']
 
         student = Student.objects.get(id=new_student, teacher=request.user)
-        day_fmt = "%Y-%m-%d"
-        time_fmt = "%H:%M"
+        start_at_fmt = "%Y-%m-%d %H:%M"
         
-        new_day_at = datetime.strptime(new_day, day_fmt)
-        new_start_at = datetime.strptime(new_start, time_fmt)
-        new_end_at = new_start_at + timedelta(minutes=new_duration)
+        new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
 
         lesson.teacher = new_teacher
         lesson.student = student
-        lesson.day = new_day_at
-        lesson.start_time = new_start_at
-        lesson.end_time = new_end_at
+        lesson.start_at = new_start_at
+        lesson.duration = new_duration
         lesson.notes = new_notes
         lesson.save()
         
         return redirect("classic:lessonlist")
         
     else:
-        duration = (datetime.combine(date.min, lesson.end_time) -
-                    datetime.combine(date.min, lesson.start_time)).seconds // 60
-        formatted_start_time = datetime.strftime(datetime.combine(date.min, lesson.start_time), "%H:%M")
+        local_start_at = timezone.localtime(lesson.start_at)
+        lesson_day = datetime.strftime(local_start_at, "%Y-%m-%d")
+        lesson_start_time = datetime.strftime(local_start_at, "%H:%M")
         
         vueLesson = f"""
         lesson: {{
           student: '{lesson.student.id}',
-          day: '{lesson.day}',
-          start: '{formatted_start_time}',
-          duration: '{duration}',
+          day: '{lesson_day}',
+          start: '{lesson_start_time}',
+          duration: '{lesson.duration}',
           notes: `{lesson.notes}`,
         }}
         """
@@ -204,19 +200,16 @@ def lessonforstudent(request, student_id):
         new_notes = request.POST['notes']
 
         student = Student.objects.get(id=new_student, teacher=request.user)
-        day_fmt = "%Y-%m-%d"
-        time_fmt = "%H:%M"
+        start_at_fmt = "%Y-%m-%d %H:%M"
         
-        new_day_at = datetime.strptime(new_day, day_fmt)
-        new_start_at = datetime.strptime(new_start, time_fmt)
-        new_end_at = new_start_at + timedelta(minutes=new_duration)
+        new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
 
         Lesson.objects.create(teacher=new_teacher,
                               student=student,
-                              day=new_day_at,
-                              start_time=new_start_at,
-                              end_time=new_end_at,
+                              start_at=new_start_at,
+                              duration = new_duration,
                               notes=new_notes)
+        
         return redirect("classic:lessonlist")
         
     else:

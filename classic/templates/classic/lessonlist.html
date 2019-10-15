@@ -17,7 +17,7 @@ Tap on a class' header to edit its info.
 {% for lesson in lessons %}
 <div class="card mt-3">
     <div class="card-header">
-        <a href="/classic/classes/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_time }} - {{ lesson.end_time }}</a>
+        <a href="/classic/classes/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_at }} ({{ lesson.duration }} mins)</a>
     </div>
     <div class="card-body">
         <p class="card-text">

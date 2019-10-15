@@ -2,6 +2,7 @@
 {% load index %}
 
 {% block content %}
+Page loaded at {{ page_loaded }}
 <h3>My Students</h3>
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addStudentModal">
@@ -23,7 +24,10 @@ Tap on a student's name to edit his or her info.
     <div class="card-body">
         <p class="card-text">
             {{ student.phone }}<br>
-            {{ student.email }}
+            {{ student.email }}<br>
+            {% if student.nextLesson %}
+            Next Class: {{ student.nextLesson }}
+            {% endif %}
         </p>
     </div>
 </div>
