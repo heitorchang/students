@@ -12,12 +12,22 @@ Backend
 [NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
 
 
+Testing
+[  ] Test add/edit student
+[  ] Test add/edit class
+[  ] Test redirects
+
+
 UI
+[  ] fix links as URLs
+[  ] link to upcoming, all classes from main month view
+[  ] calendar like google with primary color circles if there are classes,
+       tapping them opens a modal with students and times for that day
 [  ] view next 15 days classes (card with Mon, Oct. 7 as header, list in body)
-[  ] summary of classes uses html tooltip to show notes, replace " with '
+[  ] student detail shows links to months with classes (fix dummy)
+[  ] summary of classes uses html tooltip to show notes, replace " with &quot;
 [  ] class detail, button for edit
 [  ] student detail shows all classes, add button for edit
-[  ] view for month classes (list view and forward/back links)
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] themed login page

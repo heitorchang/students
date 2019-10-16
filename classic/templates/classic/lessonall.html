@@ -1,0 +1,16 @@
+{% extends "classic/base.html" %}
+{% load index %}
+
+{% block content %}
+<h3>All Classes</h3>
+
+<div class="container mt-3">
+    <ul>
+        {% for lesson in lessons %}
+        
+        <li><a href="{% url "classic:lessoncard" lesson.id %}">{{ lesson }}</a>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

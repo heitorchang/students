@@ -1,0 +1,71 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>Student Details</h3>
+
+<a href="/classic/students/" class="btn btn-primary">Back to All Students</a>
+
+<div class="container mt-3">
+    <div class="card mt-3">
+        <div class="card-header">
+            <a href="/classic/students/{{ student.id }}/" class="h4">{{ student.name }}</a>
+            <span class="float-right">
+                <a href="/classic/students/{{ student.id }}/" class="btn btn-primary">Edit Details</a>
+                <a href="/classic/classes/forstudent/{{ student.id }}/" class="btn btn-primary">Add class</a>
+            </span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {% if student.phone %} <b>Phone:</b> {{ student.phone }} {% else %} (no phone) {% endif %}<br>
+                {% if student.email %} <b>Email:</b> {{ student.email }} {% else %} (no email) {% endif %}<br>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <h4><b>Upcoming Classes</b></h4>
+    
+    <ul>
+        {% for lesson in upcomingclasses %}
+        <li>
+            <a href="/classic/classes/card/{{ lesson.id }}/">{{ lesson.start_at }}</a>
+            {% if lesson.notes %}
+            <span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap to see notes</span>
+            {% endif %}
+        </li>
+        {% endfor %}        
+    </ul>
+</div>
+
+<div class="container mt-3">
+    <h4><b>Class History</b></h4>
+
+    <ul>
+        <li>Dummy Sep. 2019</li>
+        <li>Dummy Oct. 2019</li>
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueStudent|safe }}
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     $('[data-toggle="tooltip"]').tooltip();
+   },
+ });
+</script>
+{% endblock %}

@@ -10,6 +10,9 @@ urlpatterns = [
     # read one, update one
     path('students/<int:student_id>/', views.studentdetail, name="studentdetail"),
 
+    # display classes
+    path('students/classes/<int:student_id>/', views.studentclasses, name="studentclasses"),
+
     # delete one
     path('students/<int:student_id>/confirm_delete/', views.studentconfirmdelete, name="studentconfirmdelete"),
     
@@ -19,11 +22,17 @@ urlpatterns = [
     # Lessons
     path('classes/', views.lessonlist, name="lessonlist"),
 
-    # read one, update one
-    path('classes/forstudent/<int:student_id>/', views.lessonforstudent, name="lessondetail"),
+    # All Lessons
+    path('classes/all/', views.lessonall, name="lessonall"),
+
+    #  create one with selected student
+    path('classes/forstudent/<int:student_id>/', views.lessonforstudent, name="lessonforstudent"),
 
     # read one, update one
     path('classes/<int:lesson_id>/', views.lessondetail, name="lessondetail"),
+
+    # read one as card
+    path('classes/card/<int:lesson_id>/', views.lessoncard, name="lessoncard"),
 
     # delete one
     path('classes/<int:lesson_id>/confirm_delete/', views.lessonconfirmdelete, name="lessonconfirmdelete"),

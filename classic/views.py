@@ -76,6 +76,17 @@ def studentdetail(request, student_id):
 
     
 @login_required
+def studentclasses(request, student_id):
+    student = Student.objects.get(id=student_id, teacher=request.user)
+    upcomingclasses = Lesson.objects.filter(student=student, start_at__gte=datetime.now())
+
+    return render(request, "classic/studentclasses.html",
+                  {'activetab': 'students',
+                   'student': student,
+                   'upcomingclasses': upcomingclasses})
+
+
+@login_required
 def studentconfirmdelete(request, student_id):
     student = Student.objects.get(id=student_id, teacher=request.user)
 
@@ -90,6 +101,14 @@ def studentdelete(request, student_id):
     student = Student.objects.get(id=student_id, teacher=request.user)
     student.delete()
     return redirect("classic:studentlist")
+
+
+@login_required
+def lessonall(request):
+    lessons = Lesson.objects.all()
+    return render(request, "classic/lessonall.html",
+                  {'activetab': 'lessons',
+                   'lessons': lessons})
 
     
 @login_required
@@ -125,7 +144,7 @@ def lessonlist(request):
         }}
         """
 
-        lessons = Lesson.objects.filter(teacher=request.user)
+        lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=datetime.now())
         students = Student.objects.filter(teacher=request.user)
         students = sorted(students, key=lambda s: unidecode(s.name.lower()))
 
@@ -186,6 +205,50 @@ def lessondetail(request, lesson_id):
 
 
 @login_required
+def lessoncard(request, lesson_id):
+    if request.method == "POST":
+        lesson_teacher = request.user
+        lesson_student = int(request.POST['student'])
+        lesson_day = request.POST['day']
+        lesson_start = request.POST['start']
+        lesson_duration = int(request.POST['duration'])
+        lesson_notes = request.POST['notes']
+
+        student = Student.objects.get(id=lesson_student, teacher=request.user)
+        start_at_fmt = "%Y-%m-%d %H:%M"
+        
+        start_at = datetime.strptime(lesson_day + " " + lesson_start, start_at_fmt)
+
+        Lesson.objects.create(teacher=lesson_teacher,
+                              student=student,
+                              start_at=start_at,
+                              duration=lesson_duration,
+                              notes=lesson_notes)
+        return redirect("classic:lessonlist")
+    
+    else:
+        vueLesson = f"""
+        lesson: {{
+          student: '',
+          day: '',
+          start: '',
+          duration: '60',
+          notes: ``,
+        }}
+        """
+
+        lesson = Lesson.objects.get(id=lesson_id, teacher=request.user)
+        students = Student.objects.filter(teacher=request.user)
+        students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+        return render(request, "classic/lessoncard.html",
+                      {'activetab': 'lessons',
+                       'lesson': lesson,
+                       'students': students,
+                       'vueLesson': vueLesson})
+    
+
+@login_required
 def lessonforstudent(request, student_id):
     students = Student.objects.filter(teacher=request.user)
     students = sorted(students, key=lambda s: unidecode(s.name.lower()))
@@ -209,7 +272,7 @@ def lessonforstudent(request, student_id):
                               duration = new_duration,
                               notes=new_notes)
         
-        return redirect("classic:lessonlist")
+        return redirect(f"/classic/students/classes/{student_id}/")
         
     else:
         vueLesson = f"""

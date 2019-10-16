@@ -12,19 +12,19 @@ Page loaded at {{ page_loaded }}
 <br><br>
 
 {% if students %}
-Tap on a student's name to edit his or her info.
+Tap on a name to view classes and details.
 {% endif %}
 
 {% for student in students %}
 <div class="card mt-3">
     <div class="card-header">
-        <a href="/classic/students/{{ student.id }}/" class="h4">{{ student.name }}</a>
+        <a href="/classic/students/classes/{{ student.id }}/" class="h4"><b>{{ student.name }}</b></a>
         <a href="/classic/classes/forstudent/{{ student.id }}/" class="btn btn-primary float-right">Add class</a>
     </div>
     <div class="card-body">
         <p class="card-text">
-            {% if student.phone %} {{ student.phone }}<br> {% endif %}
-            {% if student.email %} {{ student.email }}<br> {% endif %}
+            {% if student.phone %} <b>Phone:</b> {{ student.phone }} {% else %} (no phone) {% endif %}<br>
+            {% if student.email %} <b>Email:</b> {{ student.email }} {% else %} (no email) {% endif %}<br>
             {% if student.nextLesson %}
             <b>Next Class:</b> {{ student.nextLesson.start_at|date:"D, M jS, g:i a" }} ({{ student.nextLesson.duration }} mins)
             {% endif %}

@@ -3,9 +3,7 @@
 {% block content %}
 <h3>Edit Student's Info</h3>
 
-<a href="/classic/students/" class="btn btn-primary">Back to List</a>
-
-<a href="/classic/classes/forstudent/{{ studentId }}/" class="btn btn-success">Add Class</a>
+<a href="/classic/students/classes/{{ studentId }}/" class="btn btn-primary">Back to Student</a>
 
 <a href="/classic/students/{{ studentId }}/confirm_delete/" class="btn btn-danger">Delete</a>
 

@@ -2,28 +2,34 @@
 {% load index %}
 
 {% block content %}
-<h3>My Classes</h3>
+<h3>Class Details</h3>
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addLessonModal">
     Add Class
 </button>
 
-<div class="container mt-3">
-    <h3>Upcoming Classes</h3>
-    {% for lesson in lessons %}
-    <div class="card mt-3">
-        <div class="card-header">
-            <a href="/classic/classes/card/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_at }} ({{ lesson.duration }} mins)</a>
-        </div>
-        <div class="card-body">
-            {% if lesson.notes %}
-            <p class="card-text">
-                <b>Notes:</b> {{ lesson.notes }}
-            </p>
-            {% endif %}
-        </div>
+<br><br>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins) <a href="/classic/classes/{{ lesson.id }}/" class="btn btn-primary float-right">Edit Class</a>
     </div>
-    {% endfor %}
+    <div class="card-body">
+        <p class="card-text">
+            <b>Student:</b> {{ lesson.student.name }}<br>
+        </p>
+        
+        <p class="card-text">
+            {% if lesson.notes %}
+            <b>Notes:</b>
+            <div class="container">
+                <pre>{{ lesson.notes }}</pre>
+            </div>
+            {% else %}
+            (no notes)
+            {% endif %}
+        </p>
+    </div>
 </div>
 
 <!-- Add Class Modal -->
