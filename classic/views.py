@@ -14,12 +14,12 @@ def studentlist(request):
         student_phone = request.POST['phone']
         student_email = request.POST['email']
 
-        Student.objects.create(teacher=student_teacher,
-                               name=student_name,
-                               phone=student_phone,
-                               email=student_email)
+        createdStudent = Student.objects.create(teacher=student_teacher,
+                                                name=student_name,
+                                                phone=student_phone,
+                                                email=student_email)
         
-        return redirect("classic:studentlist")
+        return redirect("classic:studentclasses", createdStudent.id)
     
     else:
         vueStudent = """
@@ -193,6 +193,13 @@ def lessondetail(request, lesson_id):
         
         new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
 
+        conflictingLesson = lessonConflicts(request, new_start_at)
+
+        if conflictingLesson:
+            return render(request, "classic/lessonconflict.html",
+                          {'conflictingLesson': conflictingLesson,
+                           'newStartAt': new_start_at})
+
         lesson.teacher = new_teacher
         lesson.student = student
         lesson.start_at = new_start_at
@@ -314,6 +321,57 @@ def lessonforstudent(request, student_id):
         vueLesson = f"""
         lesson: {{
           student: '{student_id}',
+          day: '',
+          start: '',
+          duration: '60',
+          notes: ``,
+        }}
+        """
+    
+        return render(request, "classic/lessonforstudent.html",
+                      {'activetab': 'lessons',
+                       'students': students,
+                       'vueLesson': vueLesson})
+
+    
+@login_required
+def lessonadd(request):
+    students = Student.objects.filter(teacher=request.user)
+    students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+    if request.method == "POST":
+        new_teacher = request.user
+        new_student = int(request.POST['student'])
+        new_day = request.POST['day']
+        new_start = request.POST['start']
+        new_duration = int(request.POST['duration'])
+        new_notes = request.POST['notes'].strip()
+
+        student = Student.objects.get(id=new_student, teacher=request.user)
+        start_at_fmt = "%Y-%m-%d %H:%M"
+        
+        new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
+
+        conflictingLesson = lessonConflicts(request, new_start_at)
+
+        if conflictingLesson:
+            return render(request, "classic/lessonconflict.html",
+                          {'conflictingLesson': conflictingLesson,
+                           'newStartAt': new_start_at})
+
+        createdLesson = Lesson.objects.create(teacher=new_teacher,
+                                              student=student,
+                                              start_at=new_start_at,
+                                              duration = new_duration,
+                                              notes=new_notes)
+
+        
+        return redirect("classic:studentclasses", createdLesson.id)
+        
+    else:
+        vueLesson = f"""
+        lesson: {{
+          student: '',
           day: '',
           start: '',
           duration: '60',

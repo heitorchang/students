@@ -4,12 +4,26 @@
 {% block content %}
 <h3>All Classes</h3>
 
-<div class="container mt-3">
-    <ul>
-        {% for lesson in lessons %}
-        
-        <li><a href="{% url "classic:lessoncard" lesson.id %}">{{ lesson }}</a>
-        {% endfor %}
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Duration</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lesson in lessons %}
+            <tr>
+                <td><a href="{% url 'classic:studentclasses' lesson.student.id %}">{{ lesson.student.name }}</a></td>
+                <td><a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"D, M. j, 'y, g:i A" }}</a></td>
+                <td>{{ lesson.duration }}</td>
+                <td>{% if lesson.notes %}<span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap for notes</span>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </ul>
 </div>
 

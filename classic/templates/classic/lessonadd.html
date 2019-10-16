@@ -1,0 +1,27 @@
+{% extends "classic/base.html" %}
+{% load index %}
+
+{% block content %}
+<h3>Add Class</h3>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueLesson|safe }}
+   },
+
+   methods: {
+
+   },
+
+   mounted() {
+
+   },
+ });
+</script>
+{% endblock %}

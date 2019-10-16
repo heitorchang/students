@@ -1,10 +1,11 @@
 Backend
+[  ] grep -Iir fixme *
 [  ] monthly report of classes
+[  ] notifications in base.html
 [OK] check for time conflict when adding a class
 [OK] remove default class and hidden from student model
 [OK] do not pass teacher id from client, but use it from request user in django
 [OK] create model for notifications (created_at, due_at)
-[OK] archive student instead of deleting
 [OK] update notification's new status when dismissing it
 [NO] view to download only a month of lessons
 [NO] handle AJAX error codes (400 bad request when adding) after then
@@ -20,7 +21,7 @@ Testing
 
 
 UI
-[  ] all classes sortable table (?)
+[  ] all classes show a table
 [  ] link to upcoming classes (15 days), all classes from main month view
 [  ] calendar like google with primary color circles if there are classes,
        tapping them opens a modal with students and times for that day
@@ -28,18 +29,11 @@ UI
 [  ] summary of classes uses html tooltip to show notes
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
-[OK] themed login page
 [OK] use vue min in bundle
-[OK] manually test add/edit interaction
 [OK] changing student name should insert in right place
 [OK] allow blank fields on submit (defaults are set client-side)
 [OK] modify Bootstrap primary colors (used 3rd-party online tool)
-[OK] hello kitty template
 [OK] add v-cloak to app section tag
-[NO] background JS checks "now" vs. "page loaded" and display a refresh button
-[NO] close modal in finally block?
-[NO] toast after successful add/edit
-[NO] disable submit button on modals while network processes it
 [NO] prev/next link in monthly component, should download new data
 [NO] get mm for monthly from $parent, not prop
 [NO] block screen while saving JSON

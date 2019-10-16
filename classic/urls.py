@@ -22,6 +22,9 @@ urlpatterns = [
     # Lessons
     path('classes/', views.lessonlist, name="lessonlist"),
 
+    # Generic add
+    path('classes/add/', views.lessonadd, name="lessonadd"),
+
     # All Lessons
     path('classes/all/', views.lessonall, name="lessonall"),
 

@@ -30,9 +30,9 @@
     <ul>
         {% for lesson in upcomingclasses %}
         <li>
-            <a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at }}</a>
+            <a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"D, M. j, g:i A" }}</a>
             {% if lesson.notes %}
-            <span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap to see notes</span>
+            <span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap for notes</span>
             {% endif %}
         </li>
         {% endfor %}        
@@ -43,8 +43,8 @@
     <h4><b>Class History</b></h4>
 
     <ul>
-        <li>Dummy Sep. 2019</li>
-        <li>Dummy Oct. 2019</li>
+        <li>FIXME Sep. 2019</li>
+        <li>FIXME Oct. 2019</li>
     </ul>
 </div>
 
