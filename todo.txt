@@ -1,7 +1,7 @@
 Backend
 [  ] grep -Iir fixme *
 [  ] monthly report of classes
-[  ] notifications in base.html
+[OK] load notifications for Monday on Friday
 [OK] check for time conflict when adding a class
 [OK] remove default class and hidden from student model
 [OK] do not pass teacher id from client, but use it from request user in django
@@ -14,19 +14,18 @@ Backend
 
 
 Testing
-[  ] Selenium?
+[  ] Selenium
 [  ] Test add/edit student
 [  ] Test add/edit class
 [  ] Test redirects
 
 
 UI
-[  ] all classes show a table
-[  ] link to upcoming classes (15 days), all classes from main month view
 [  ] calendar like google with primary color circles if there are classes,
        tapping them opens a modal with students and times for that day
+[  ] link to upcoming classes (15 days), all classes from main month view
 [  ] student detail shows links to months with classes (fix dummy)
-[  ] summary of classes uses html tooltip to show notes
+[OK] all classes show a table
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] use vue min in bundle

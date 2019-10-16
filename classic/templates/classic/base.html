@@ -33,6 +33,11 @@
              border-color: #90c;
          }
 
+         .table .thead-dark th {
+             background-color: #a00;
+             border: none;
+         }
+         
          [v-cloak] {
              display: none;
          }
@@ -172,7 +177,7 @@
         </style>
     </head>
     <body>
-        <script src="/static/js/jqbspv.js"></script>
+        <script src="/static/js/jqfullpbsv.js"></script>
 
         {% if request.user.is_authenticated  %}
         <ul class="nav nav-pills justify-content-center">
@@ -192,6 +197,31 @@
                 </a>
             </li>
         </ul>
+        {% if notifications %}
+        <div class="container">
+            <h3>New Notifications</h3>
+            Tap to dismiss
+            {% for notification in notifications %}
+            <div class="alert alert-warning fade show" id="notification{{ notification.id }}" onclick="dismissNotification({{ notification.id }});">{{ notification.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 20px; right: 20px; min-height: 200px;">            
+            <div class="toast" id="notificationFailToast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="mr-auto text-danger">Error</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Could not dismiss notification.<br>Please try again later.
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
         {% endif %}
 
         <div class="container" id="app" v-cloak>
@@ -221,5 +251,43 @@
         </script>
         {% endblock %}
 
+        <script>
+         $("#notificationFailToast").toast({ delay: 2000 });
+
+         // https://docs.djangoproject.com/en/2.2/ref/csrf/#ajax
+         function getCookie(name) {
+           var cookieValue = null;
+           if (document.cookie && document.cookie !== '') {
+             var cookies = document.cookie.split(';');
+             for (var i = 0; i < cookies.length; i++) {
+               var cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                 break;
+               }
+             }
+           }
+           return cookieValue;
+         }
+         var csrftoken = getCookie('csrftoken');
+         
+         function dismissNotification(id) {           
+           $.ajax({
+             type: 'PUT',
+             headers: {'X-CSRFToken': csrftoken},
+             url: "/records/notifications/" + id + "/",
+             data: JSON.stringify({"is_new": false}),
+             processData: false,
+             contentType: 'application/json'
+           })
+            .done(function() {           
+              $("#notification" + id).alert('close');
+            })
+            .fail(function() {
+              $("#notificationFailToast").toast('show');
+            })
+         }
+        </script>
     </body>
 </html>

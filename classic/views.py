@@ -107,11 +107,20 @@ def lessonConflicts(request, new_start_at):
     """Return True if newLesson starts in another lesson's time window"""
     lessons = Lesson.objects.filter(teacher=request.user)
 
-    print(new_start_at)
     for lesson in lessons:
-        print(lesson.start_at)
         if lesson.start_at <= new_start_at < lesson.start_at + timedelta(minutes=lesson.duration):
             return lesson
+    return None
+
+
+def editLessonConflicts(request, editedLesson, new_start_at):
+    """Return True if newLesson starts in another lesson's time window"""
+    lessons = Lesson.objects.filter(teacher=request.user)
+    
+    for lesson in lessons:
+        if lesson.id != editedLesson.id:
+            if lesson.start_at <= new_start_at < lesson.start_at + timedelta(minutes=lesson.duration):
+                return lesson
     return None
 
 
@@ -193,7 +202,7 @@ def lessondetail(request, lesson_id):
         
         new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
 
-        conflictingLesson = lessonConflicts(request, new_start_at)
+        conflictingLesson = editLessonConflicts(request, lesson, new_start_at)
 
         if conflictingLesson:
             return render(request, "classic/lessonconflict.html",
@@ -336,38 +345,33 @@ def lessonforstudent(request, student_id):
     
 @login_required
 def lessonadd(request):
-    students = Student.objects.filter(teacher=request.user)
-    students = sorted(students, key=lambda s: unidecode(s.name.lower()))
-
     if request.method == "POST":
-        new_teacher = request.user
-        new_student = int(request.POST['student'])
-        new_day = request.POST['day']
-        new_start = request.POST['start']
-        new_duration = int(request.POST['duration'])
-        new_notes = request.POST['notes'].strip()
+        lesson_teacher = request.user
+        lesson_student = int(request.POST['student'])
+        lesson_day = request.POST['day']
+        lesson_start = request.POST['start']
+        lesson_duration = int(request.POST['duration'])
+        lesson_notes = request.POST['notes'].strip()
 
-        student = Student.objects.get(id=new_student, teacher=request.user)
+        student = Student.objects.get(id=lesson_student, teacher=request.user)
         start_at_fmt = "%Y-%m-%d %H:%M"
         
-        new_start_at = datetime.strptime(new_day + " " + new_start, start_at_fmt)
+        start_at = datetime.strptime(lesson_day + " " + lesson_start, start_at_fmt)
 
-        conflictingLesson = lessonConflicts(request, new_start_at)
+        conflictingLesson = lessonConflicts(request, start_at)
 
         if conflictingLesson:
             return render(request, "classic/lessonconflict.html",
                           {'conflictingLesson': conflictingLesson,
-                           'newStartAt': new_start_at})
-
-        createdLesson = Lesson.objects.create(teacher=new_teacher,
+                           'newStartAt': start_at})
+        
+        createdLesson = Lesson.objects.create(teacher=lesson_teacher,
                                               student=student,
-                                              start_at=new_start_at,
-                                              duration = new_duration,
-                                              notes=new_notes)
-
-        
-        return redirect("classic:studentclasses", createdLesson.id)
-        
+                                              start_at=start_at,
+                                              duration=lesson_duration,
+                                              notes=lesson_notes)
+        return redirect("classic:lessoncard", createdLesson.id)
+    
     else:
         vueLesson = f"""
         lesson: {{
@@ -378,13 +382,18 @@ def lessonadd(request):
           notes: ``,
         }}
         """
-    
-        return render(request, "classic/lessonforstudent.html",
+
+        lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=datetime.now())
+        students = Student.objects.filter(teacher=request.user)
+        students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+        return render(request, "classic/lessonadd.html",
                       {'activetab': 'lessons',
+                       'lessons': lessons,
                        'students': students,
                        'vueLesson': vueLesson})
 
-    
+
 @login_required
 def lessonconfirmdelete(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id, teacher=request.user)

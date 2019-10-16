@@ -17,4 +17,4 @@ class LessonSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ['id', 'message', 'due_at', 'is_new']
+        fields = ['id', 'is_new']
