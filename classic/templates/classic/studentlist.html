@@ -18,8 +18,8 @@ Tap on a name to view classes and details.
 {% for student in students %}
 <div class="card mt-3">
     <div class="card-header">
-        <a href="/classic/students/classes/{{ student.id }}/" class="h4"><b>{{ student.name }}</b></a>
-        <a href="/classic/classes/forstudent/{{ student.id }}/" class="btn btn-primary float-right">Add class</a>
+        <a href="{% url 'classic:studentclasses' student.id %}" class="h4"><b>{{ student.name }}</b></a>
+        <a href="{% url 'classic:lessonforstudent' student.id %}" class="btn btn-primary float-right">Add class</a>
     </div>
     <div class="card-body">
         <p class="card-text">

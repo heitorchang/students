@@ -3,15 +3,15 @@
 {% block content %}
 <h3>Student Details</h3>
 
-<a href="/classic/students/" class="btn btn-primary">Back to All Students</a>
+<a href="{% url 'classic:studentlist' %}" class="btn btn-primary">Back to All Students</a>
 
 <div class="container mt-3">
     <div class="card mt-3">
         <div class="card-header">
-            <a href="/classic/students/{{ student.id }}/" class="h4">{{ student.name }}</a>
+            <a href="{% url 'classic:studentdetail' student.id %}" class="h4">{{ student.name }}</a>
             <span class="float-right">
-                <a href="/classic/students/{{ student.id }}/" class="btn btn-primary">Edit Details</a>
-                <a href="/classic/classes/forstudent/{{ student.id }}/" class="btn btn-primary">Add class</a>
+                <a href="{% url 'classic:studentdetail' student.id %}" class="btn btn-primary">Edit Details</a>
+                <a href="{% url 'classic:lessonforstudent' student.id %}" class="btn btn-primary">Add class</a>
             </span>
         </div>
         <div class="card-body">
@@ -29,7 +29,7 @@
     <ul>
         {% for lesson in upcomingclasses %}
         <li>
-            <a href="/classic/classes/card/{{ lesson.id }}/">{{ lesson.start_at }}</a>
+            <a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at }}</a>
             {% if lesson.notes %}
             <span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap to see notes</span>
             {% endif %}

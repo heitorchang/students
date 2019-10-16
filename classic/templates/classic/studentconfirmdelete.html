@@ -6,10 +6,10 @@
 Really delete {{ studentName }}?
 <br><br>
 
-<a href="/classic/students/{{ studentId }}/delete/" class="btn btn-danger">Yes, Delete Student</a>
+<a href="{% url 'classic:studentdelete' studentId %}" class="btn btn-danger">Yes, Delete Student</a>
 
 <br><br><br>
 
-<a href="/classic/students/" class="btn btn-secondary">Cancel</a>
+<a href="{% url 'classic:studentclasses' studentId %}" class="btn btn-secondary">Cancel</a>
 
 {% endblock %}

@@ -272,7 +272,7 @@ def lessonforstudent(request, student_id):
                               duration = new_duration,
                               notes=new_notes)
         
-        return redirect(f"/classic/students/classes/{student_id}/")
+        return redirect("classic:studentclasses", student_id)
         
     else:
         vueLesson = f"""

@@ -3,7 +3,7 @@
 {% block content %}
 <h3>Add Class</h3>
 
-<a href="/classic/students/" class="btn btn-primary">Back to All Students</a>
+<a href="{% url 'classic:studentlist' %}" class="btn btn-primary">Back to All Students</a>
 
 {% include "classic/lessonform.html" %}
 

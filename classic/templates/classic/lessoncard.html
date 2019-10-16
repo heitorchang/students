@@ -12,7 +12,11 @@
 
 <div class="card mt-3">
     <div class="card-header">
-        <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins) <a href="/classic/classes/{{ lesson.id }}/" class="btn btn-primary float-right">Edit Class</a>
+        <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
+        <span class="float-right">
+            <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
+        </span>
     </div>
     <div class="card-body">
         <p class="card-text">

@@ -3,9 +3,9 @@
 {% block content %}
 <h3>Edit Class' Info</h3>
 
-<a href="/classic/classes/" class="btn btn-primary">Back to All Classes</a>
+<a href="{% url 'classic:lessonlist' %}" class="btn btn-primary">Back to All Classes</a>
 
-<a href="/classic/classes/{{ lessonId }}/confirm_delete/" class="btn btn-danger">Delete Class</a>
+<a href="{% url 'classic:lessonconfirmdelete' lessonId %}" class="btn btn-danger">Delete Class</a>
 
 {% include "classic/lessonform.html" %}
 

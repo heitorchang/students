@@ -9,11 +9,12 @@
 </button>
 
 <div class="container mt-3">
+    <a href="{% url 'classic:lessonall' %}">All Classes</a>
     <h3>Upcoming Classes</h3>
     {% for lesson in lessons %}
     <div class="card mt-3">
         <div class="card-header">
-            <a href="/classic/classes/card/{{ lesson.id }}/" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_at }} ({{ lesson.duration }} mins)</a>
+            <a href="{% url 'classic:lessoncard' lesson.id %}" class="h6">{{ lesson.student.name }} {{ lesson.day }} {{ lesson.start_at }} ({{ lesson.duration }} mins)</a>
         </div>
         <div class="card-body">
             {% if lesson.notes %}

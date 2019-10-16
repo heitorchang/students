@@ -177,17 +177,17 @@
         {% if request.user.is_authenticated  %}
         <ul class="nav nav-pills justify-content-center">
             <li class="nav-item">
-                <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="/classic/classes/">
+                <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="{% url 'classic:lessonlist' %}">
                     <img src="/static/img/calendar.png" alt="cal"> <small>Class</small>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{% if activetab == 'students' %} active{% endif %}" href="/classic/students/">
+                <a class="nav-link{% if activetab == 'students' %} active{% endif %}" href="{% url 'classic:studentlist' %}">
                     <img src="/static/img/people.png" alt="ppl"> <small>Student</small>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{% if activetab == 'profile' %} active{% endif %}" href="/classic/profile/">
+                <a class="nav-link{% if activetab == 'profile' %} active{% endif %}" href="{% url 'classic:profile' %}">
                     <img src="/static/img/hellokittyface.png" alt="kitty"> <small>Me</small>
                 </a>
             </li>
