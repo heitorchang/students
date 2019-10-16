@@ -10,8 +10,9 @@
         <div class="card-header">
             <a href="{% url 'classic:studentdetail' student.id %}" class="h4">{{ student.name }}</a>
             <span class="float-right">
-                <a href="{% url 'classic:studentdetail' student.id %}" class="btn btn-primary">Edit Details</a>
-                <a href="{% url 'classic:lessonforstudent' student.id %}" class="btn btn-primary">Add class</a>
+                <a href="{% url 'classic:studentdetail' student.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'classic:studentconfirmdelete' student.id %}" class="btn btn-danger">Delete</a>                
+                <a href="{% url 'classic:lessonforstudent' student.id %}" class="btn btn-success">Add class</a>
             </span>
         </div>
         <div class="card-body">

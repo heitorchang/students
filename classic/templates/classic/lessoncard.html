@@ -4,38 +4,39 @@
 {% block content %}
 <h3>Class Details</h3>
 
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addLessonModal">
-    Add Class
-</button>
-
-<br><br>
-
-<div class="card mt-3">
-    <div class="card-header">
-        <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
-        <span class="float-right">
-            <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
-        </span>
-    </div>
-    <div class="card-body">
-        <p class="card-text">
-            <b>Student:</b> {{ lesson.student.name }}<br>
-        </p>
-        
-        <p class="card-text">
-            {% if lesson.notes %}
-            <b>Notes:</b>
-            <div class="container">
-                <pre>{{ lesson.notes }}</pre>
-            </div>
-            {% else %}
-            (no notes)
-            {% endif %}
-        </p>
+<div class="container mt-3">
+    <div class="card mt-3">
+        <div class="card-header">
+            <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
+            <span class="float-right">
+                <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
+            </span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <b>Student:</b> <a href="{% url 'classic:studentclasses' lesson.student.id %}">{{ lesson.student.name }}</a><br>
+            </p>
+            
+            <p class="card-text">
+                {% if lesson.notes %}
+                <b>Notes:</b>
+                <div class="container">
+                    <pre>{{ lesson.notes }}</pre>
+                </div>
+                {% else %}
+                (no notes)
+                {% endif %}
+            </p>
+        </div>
     </div>
 </div>
 
+<div class="container mt-3">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addLessonModal">
+        Repeat this Class the Following Week
+    </button>
+</div>
 <!-- Add Class Modal -->
 <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

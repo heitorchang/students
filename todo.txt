@@ -1,6 +1,6 @@
 Backend
-[  ] check for time conflict when adding a class
 [  ] monthly report of classes
+[OK] check for time conflict when adding a class
 [OK] remove default class and hidden from student model
 [OK] do not pass teacher id from client, but use it from request user in django
 [OK] create model for notifications (created_at, due_at)
@@ -13,21 +13,19 @@ Backend
 
 
 Testing
+[  ] Selenium?
 [  ] Test add/edit student
 [  ] Test add/edit class
 [  ] Test redirects
 
 
 UI
-[  ] fix links as URLs
-[  ] link to upcoming, all classes from main month view
+[  ] all classes sortable table (?)
+[  ] link to upcoming classes (15 days), all classes from main month view
 [  ] calendar like google with primary color circles if there are classes,
        tapping them opens a modal with students and times for that day
-[  ] view next 15 days classes (card with Mon, Oct. 7 as header, list in body)
 [  ] student detail shows links to months with classes (fix dummy)
-[  ] summary of classes uses html tooltip to show notes, replace " with &quot;
-[  ] class detail, button for edit
-[  ] student detail shows all classes, add button for edit
+[  ] summary of classes uses html tooltip to show notes
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] themed login page

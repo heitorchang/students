@@ -1,0 +1,17 @@
+{% extends "classic/base.html" %}
+{% load index %}
+
+{% block content %}
+<h3>Class Conflict</h3>
+
+<div class="container">
+    The new class starting at {{ newStartAt }} will conflict with {{ conflictingLesson.student.name }}'s class at {{ conflictingLesson.start_at }}.
+</div>
+
+<div class="container mt-3">
+    <a href="javascript:window.history.back();" class="btn btn-primary">
+        Go Back
+    </a>
+</div>
+
+{% endblock %}
