@@ -16,7 +16,7 @@ def notifications_processor(request):
     end_datetime = datetime.combine(end_day, time(0, 0))
     
     if request.user.is_authenticated:
-        lessons = Lesson.objects.filter(teacher=request.user, notified=False, start_at__gte=now, start_at__lte=end_datetime)
+        lessons = Lesson.objects.filter(teacher=request.user, notified=False, start_at__gte=now, start_at__lt=end_datetime)
 
         for lesson in lessons:
             lesson.notified = True
