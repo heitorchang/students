@@ -60,7 +60,7 @@ def studentdetail(request, student_id):
         student.email = new_email
         student.save()
         
-        return redirect("classic:studentlist")
+        return redirect("classic:studentclasses", student_id)
         
     else:        
         vueStudent = f"""
