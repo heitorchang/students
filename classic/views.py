@@ -346,7 +346,7 @@ def lessonforstudent(request, student_id):
 
     
 @login_required
-def lessonadd(request):
+def lessonadd(request, prefilled_date=""):
     if request.method == "POST":
         lesson_teacher = request.user
         lesson_student = int(request.POST['student'])
@@ -372,13 +372,13 @@ def lessonadd(request):
                                               start_at=start_at,
                                               duration=lesson_duration,
                                               notes=lesson_notes)
-        return redirect("classic:lessoncard", createdLesson.id)
+        return redirect("classic:calendarthismonth")
     
     else:
         vueLesson = f"""
         lesson: {{
           student: '',
-          day: '',
+          day: '{prefilled_date}',
           start: '',
           duration: '60',
           notes: ``,
@@ -429,48 +429,95 @@ def lessonthismonth(request):
 
 @login_required
 def calendarmonth(request, year, month):
-    weekslist = []
-    first = date(year, month, 1)
-    last = date(year, month, monthrange(year, month)[1])
-    firstextras = (first.weekday() + 1) % 7
-    lastextras = 6 - ((last.weekday() + 1) % 7)
+    if request.method == "POST":
+        lesson_teacher = request.user
+        lesson_student = int(request.POST['student'])
+        lesson_day = request.POST['day']
+        lesson_start = request.POST['start']
+        lesson_duration = int(request.POST['duration'])
+        lesson_notes = request.POST['notes'].strip()
 
-    firstcalday = first - timedelta(days=firstextras)
-    lastcalday = last + timedelta(days=lastextras)
+        student = Student.objects.get(id=lesson_student, teacher=request.user)
+        start_at_fmt = "%Y-%m-%d %H:%M"
+        
+        start_at = datetime.strptime(lesson_day + " " + lesson_start, start_at_fmt)
 
-    days = (lastcalday - firstcalday).days + 1
-    weeks = days // 7
+        conflictingLesson = lessonConflicts(request, start_at)
+
+        if conflictingLesson:
+            return render(request, "classic/lessonconflict.html",
+                          {'conflictingLesson': conflictingLesson,
+                           'newStartAt': start_at})
+        
+        Lesson.objects.create(teacher=lesson_teacher,
+                              student=student,
+                              start_at=start_at,
+                              duration=lesson_duration,
+                              notes=lesson_notes)
+        return redirect("classic:calendarthismonth")
+
+    else:
+        vueLesson = f"""
+        lesson: {{
+          student: '',
+          day: '',
+          start: '',
+          duration: '60',
+          notes: ``,
+        }}
+        """
+
+        weekslist = []
+        first = date(year, month, 1)
+        last = date(year, month, monthrange(year, month)[1])
+        firstextras = (first.weekday() + 1) % 7
+        lastextras = 6 - ((last.weekday() + 1) % 7)
+
+        firstcalday = first - timedelta(days=firstextras)
+        lastcalday = last + timedelta(days=lastextras)
+
+        days = (lastcalday - firstcalday).days + 1
+        weeks = days // 7
+
+        assert firstcalday.weekday() == 6
+        assert lastcalday.weekday() == 5
+
+        startlessons = datetime.combine(firstcalday, time(0, 0, 0))
+        endlessons = datetime.combine(lastcalday, time(23, 59, 59))
+        lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=startlessons, start_at__lte=endlessons)
+        lessonsdict = defaultdict(list)
+
+        for lesson in lessons:
+            lessonsdict[datetime.strftime(lesson.start_at.date(), "%Y-%m-%d")].append(lesson)
+
+        for i in range(weeks):
+            week = []
+            for d in range(7):
+                daylabel = datetime.strftime(firstcalday, "%d")
+                if daylabel[0] == "0":
+                    daylabel = daylabel[1]
+                week.append({'longlabel': datetime.strftime(firstcalday, "%a, %b. %d, %I:%M %p"),
+                             'label': daylabel,
+                             'ymd': datetime.strftime(firstcalday, "%Y-%m-%d"),
+                             'modalLabel': datetime.strftime(firstcalday, "%a, %b. %d"),
+                             'modalId': "id" + datetime.strftime(firstcalday, "%Y-%m-%d"),
+                             'lessons': lessonsdict[datetime.strftime(firstcalday, "%Y-%m-%d")],})
+                firstcalday += timedelta(days=1)
+            weekslist.append(week[:])
+            
+        students = Student.objects.filter(teacher=request.user)
+        students = sorted(students, key=lambda s: unidecode(s.name.lower()))
+
+        headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
+
+        return render(request, "classic/calendarmonth.html",
+                      {'activetab': 'lessons',
+                       'lessons': lessons,
+                       'students': students,
+                       'headermonth': headermonth,
+                       'weeks': weekslist,
+                       'vueLesson': vueLesson})
     
-    assert firstcalday.weekday() == 6
-    assert lastcalday.weekday() == 5
-
-    startlessons = datetime.combine(firstcalday, time(0, 0, 0))
-    endlessons = datetime.combine(lastcalday, time(23, 59, 59))
-    lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=startlessons, start_at__lte=endlessons)
-    lessonsdict = defaultdict(list)
-    
-    for lesson in lessons:
-        lessonsdict[datetime.strftime(lesson.start_at.date(), "%Y-%m-%d")].append(lesson)
-
-    for i in range(weeks):
-        week = []
-        for d in range(7):
-            daylabel = datetime.strftime(firstcalday, "%d")
-            if daylabel[0] == "0":
-                daylabel = daylabel[1]
-            week.append({'longlabel': datetime.strftime(firstcalday, "%a, %b. %d, %I:%M %p"),
-                         'label': daylabel,
-                         'lessons': lessonsdict[datetime.strftime(firstcalday, "%Y-%m-%d")],})
-            firstcalday += timedelta(days=1)
-        weekslist.append(week[:])
-
-    headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
-    
-    return render(request, "classic/calendarmonth.html",
-                  {'activetab': 'lessons',
-                   'headermonth': headermonth,
-                   'weeks': weekslist})
-
 
 @login_required
 def calendarthismonth(request):

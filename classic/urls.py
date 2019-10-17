@@ -25,6 +25,9 @@ urlpatterns = [
     # Generic add
     path('classes/add/', views.lessonadd, name="lessonadd"),
 
+    # Add with date
+    path('classes/add/date/<str:prefilled_date>/', views.lessonadd, name="lessonadddate"),
+
     # All Lessons
     path('classes/all/', views.lessonall, name="lessonall"),
 

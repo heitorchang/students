@@ -24,13 +24,13 @@
          }
 
          .white-bordered > thead > tr > th {
-             border: 1px solid #90c;
-             border-color: #90c;
+             border: 1px solid #e8c;
+             border-color: #e8c;
          }
 
          .white-bordered > tbody > tr > td {
-             border: 1px solid #90c;
-             border-color: #90c;
+             border: 1px solid #e8c;
+             border-color: #e8c;
          }
 
          .table .thead-dark th {
@@ -182,7 +182,7 @@
         {% if request.user.is_authenticated  %}
         <ul class="nav nav-pills justify-content-center">
             <li class="nav-item">
-                <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="{% url 'classic:lessonlist' %}">
+                <a class="nav-link{% if activetab == 'lessons' %} active{% endif %}" href="{% url 'classic:calendarthismonth' %}">
                     <img src="/static/img/calendar.png" alt="cal"> <small>Class</small>
                 </a>
             </li>

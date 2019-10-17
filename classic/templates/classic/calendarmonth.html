@@ -3,6 +3,11 @@
 {% block content %}
 <h3>{{ headermonth }}</h3>
 
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addLessonModal">
+    Add Class
+</button>
+<br><br>
+
 <table class="table white-bordered">
     <thead>
         <tr>
@@ -19,12 +24,60 @@
         {% for week in weeks %}
         <tr>
             {% for day in week %}
-            <td>{{ day.label }} {{ day.lessons }}</td>
+            <td>
+                {% if day.lessons %}
+                <span class="badge badge-primary" @click="openModal('{{ day.modalId }}')">{{ day.label }}</span>
+                {% else %}
+                <span class="badge badge-light" @click="addClassDay('{{ day.modalId }}')">{{ day.label }}</span>
+                {% endif %}
+            </td>
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<!-- Add Class Modal -->
+<div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addLessonModalLabel">Add Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include "classic/lessonform.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals, add class in modal with pre-filled date -->
+{% for week in weeks %}
+{% for day in week %}
+<div class="modal fade" id="{{ day.modalId }}" tabindex="-1" role="dialog" aria-labelledby="{{ day.modalId }}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ day.modalId }}Label">{{ day.modalLabel }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ day.lessons }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="{% url 'classic:lessonadddate' prefilled_date=day.ymd %}" class="btn btn-success">Add Class</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
 
 {% endblock %}
 
@@ -35,11 +88,18 @@
  let app = new Vue({
    el: "#app",
    data: {
-
+     {{ vueLesson|safe }}
    },
    
    methods: {
-     
+     openModal(id) {
+       $("#" + id).modal('show');
+     },
+     addClassDay(id) {
+       this.lesson.day = id.substr(2);
+       $("#addLessonModal").modal('show');
+       
+     }       
    },
 
    mounted() {
@@ -48,3 +108,4 @@
  });
 </script>
 {% endblock %}
+

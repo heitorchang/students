@@ -1,5 +1,4 @@
 Backend
-[  ] grep -Iir fixme *
 [  ] monthly report of classes
 [OK] load notifications for Monday on Friday
 [OK] check for time conflict when adding a class
@@ -14,6 +13,7 @@ Backend
 
 
 Testing
+[  ] grep -Iir dummy fixme
 [  ] Selenium
 [  ] Test add/edit student
 [  ] Test add/edit class
@@ -21,11 +21,10 @@ Testing
 
 
 UI
-[  ] calendar like google with primary color circles if there are classes,
-       tapping them opens a modal with students and times for that day
 [  ] link to upcoming classes (15 days), all classes from main month view
 [  ] student detail shows links to months with classes (fix dummy)
 [OK] all classes show a table
+[OK] calendar with primary color circles if classes, tap to open classes modal
 [OK] student list shows next class as computed property
 [OK] create custom admin page with password reset instead of link to admin
 [OK] use vue min in bundle
