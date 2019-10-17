@@ -514,6 +514,9 @@ def calendarmonth(request, year, month):
         weekslist = []
         first = date(year, month, 1)
         last = date(year, month, monthrange(year, month)[1])
+
+        # Count extra days to the first and last weeks. These will belong
+        # to other months
         firstextras = (first.weekday() + 1) % 7
         lastextras = 6 - ((last.weekday() + 1) % 7)
 
