@@ -1,6 +1,7 @@
 from datetime import datetime, date, time, timedelta
 from calendar import monthrange, month_name
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+from operator import itemgetter
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from django.contrib.auth.decorators import login_required
@@ -440,6 +441,33 @@ def lessonthismonth(request):
 
 # Calendar views
 
+def monthlyreport(request, year, month):
+    startlessons = datetime(year, month, 1, 0, 0, 0)
+    endlessons = datetime(year, month, monthrange(year, month)[1], 23, 59, 59)
+    
+    lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=startlessons, start_at__lte=endlessons)
+
+    now = datetime.now()
+
+    studentdict = {student.id: {"name": student.name,
+                                "id": student.id,
+                                "completed": 0,
+                                "upcoming": 0,
+                                "total": 0}
+                   for student in Student.objects.filter(teacher=request.user)}
+    
+    for lesson in lessons:
+        studentdict[lesson.student.id]['total'] += 1
+        if lesson.start_at <= now:
+            studentdict[lesson.student.id]['completed'] += 1
+        else:
+            studentdict[lesson.student.id]['upcoming'] += 1
+
+    filtered = sorted((v for (k, v) in studentdict.items() if (v['completed'] + v['upcoming']) > 0), key=itemgetter('name'))
+    
+    return filtered
+
+
 @login_required
 def calendarmonth(request, year, month):
     if request.method == "POST":
@@ -522,6 +550,7 @@ def calendarmonth(request, year, month):
         students = sorted(students, key=lambda s: unidecode(s.name.lower()))
 
         headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
+        headermonthshort = datetime.strftime(date(year, month, 1), "%b %Y")
 
         if month == 1:
             prevMonth = 12
@@ -536,18 +565,23 @@ def calendarmonth(request, year, month):
         else:
             nextMonth = month + 1
             nextYear = year
+
+        # monthly report
+        studentreport = monthlyreport(request, year, month)
         
         return render(request, "classic/calendarmonth.html",
                       {'activetab': 'lessons',
                        'lessons': lessons,
                        'students': students,
                        'headermonth': headermonth,
+                       'headermonthshort': headermonthshort,
                        'weeks': weekslist,
                        'prevMonth': prevMonth,
                        'prevYear': prevYear,
                        'nextMonth': nextMonth,
                        'nextYear': nextYear,
                        'hasModal': True,
+                       'studentreport': studentreport,
                        'vueLesson': vueLesson})
     
 

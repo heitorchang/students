@@ -1,0 +1,24 @@
+{% if studentreport %}
+<h3>Monthly Report, {{ headermonthshort }}</h3>
+
+<table class="table white-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Completed</th>
+            <th>Upcoming</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in studentreport %}
+        <tr>
+            <td><a href="{% url 'classic:studentclasses' student.id %}"><b>{{ student.name }}</b></a></td>
+            <td>{{ student.completed }}</td>
+            <td>{{ student.upcoming }}</td>
+            <td><b>{{ student.total }}</b></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}      

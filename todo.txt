@@ -1,5 +1,5 @@
 Backend
-[  ] monthly report of classes
+[OK] monthly report of classes, table with completed and upcoming class count
 [OK] load notifications for Monday on Friday
 [OK] check for time conflict when adding a class
 [OK] remove default class and hidden from student model
@@ -10,6 +10,10 @@ Backend
 [NO] handle AJAX error codes (400 bad request when adding) after then
 [NO] figure out why Error: network error appears on adding student. No SPA
 [NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
+
+
+Testing
+[OK] test edge cases for report
 
 
 UI
