@@ -218,7 +218,7 @@ def lessondetail(request, lesson_id):
         lesson.notes = new_notes
         lesson.save()
         
-        return redirect("classic:lessonlist")
+        return redirect("classic:calendarthismonth")
         
     else:
         lesson_day = datetime.strftime(lesson.start_at, "%Y-%m-%d")
@@ -410,7 +410,7 @@ def lessonconfirmdelete(request, lesson_id):
 def lessondelete(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id, teacher=request.user)
     lesson.delete()
-    return redirect("classic:lessonlist")
+    return redirect("classic:calendarthismonth")
 
 
 @login_required
@@ -510,12 +510,30 @@ def calendarmonth(request, year, month):
 
         headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
 
+        if month == 1:
+            prevMonth = 12
+            prevYear = year - 1
+        else:
+            prevMonth = month - 1
+            prevYear = year
+
+        if month == 12:
+            nextMonth = 1
+            nextYear = year + 1
+        else:
+            nextMonth = month + 1
+            nextYear = year
+        
         return render(request, "classic/calendarmonth.html",
                       {'activetab': 'lessons',
                        'lessons': lessons,
                        'students': students,
                        'headermonth': headermonth,
                        'weeks': weekslist,
+                       'prevMonth': prevMonth,
+                       'prevYear': prevYear,
+                       'nextMonth': nextMonth,
+                       'nextYear': nextYear,
                        'vueLesson': vueLesson})
     
 

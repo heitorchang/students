@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 from ui.views import index
+from accounts.views import signup_view
 import django.contrib.auth.urls as auth_urls
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/signup/', signup_view, name="signup_view"),
     path('accounts/', include('django.contrib.auth.urls')),
     path('records/', include('records.urls')),
     path('ui/', include('ui.urls')),
