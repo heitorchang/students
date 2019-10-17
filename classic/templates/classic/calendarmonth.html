@@ -3,12 +3,18 @@
 {% block content %}
 <h3>{{ headermonth }}</h3>
 
+<!--
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addLessonModal">
     Add Class
 </button>
-<br><br>
+-->
 
-<table class="table white-bordered">
+<div class="container">
+    <a href="{% url 'classic:calendarmonth' prevYear prevMonth %}" class="btn btn-primary">Previous Month</a>
+    <a href="{% url 'classic:calendarmonth' nextYear nextMonth %}" class="btn btn-primary float-right">Next Month</a>    
+</div>
+
+<table class="table white-bordered mt-3">
     <thead>
         <tr>
             <th scope="col">Sun</th>
