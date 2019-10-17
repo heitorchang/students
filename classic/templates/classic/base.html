@@ -206,10 +206,32 @@
             {% endfor %}
         </div>
 
+        <!--
         <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 5px; left: 5px; min-height: 50px;">            
             <div class="toast" id="notificationFailToast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body">
                     Could not dismiss notification.<br>Please try again later.
+                </div>
+            </div>
+        </div>
+        -->
+
+        <!-- Error Modal -->
+        <div class="modal" id="errorModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">Could not dismiss notification.<br>Please try again later.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,7 +268,7 @@
         {% endblock %}
 
         <script>
-         $("#notificationFailToast").toast({ delay: 2000 });
+         // $("#notificationFailToast").toast({ delay: 2000 });
 
          // https://docs.djangoproject.com/en/2.2/ref/csrf/#ajax
          function getCookie(name) {
@@ -279,7 +301,8 @@
               $("#notification" + id).alert('close');
             })
             .fail(function() {
-              $("#notificationFailToast").toast('show');
+              // $("#notificationFailToast").toast('show');
+              $("#errorModal").modal('show');
             })
          }
         </script>
