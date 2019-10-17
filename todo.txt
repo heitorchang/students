@@ -21,7 +21,7 @@ UI
 [  ] sign up page
 [  ] month's classes in cards per day under calendar
 [  ] studentclasses shows links to months with classes (history)
-[  ] student's classes for a given month
+[  ] student's classes for a given month (history)
 [OK] all classes show a table
 [OK] calendar with primary color circles if classes, tap to open classes modal
 [OK] student list shows next class as computed property

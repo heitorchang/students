@@ -55,7 +55,6 @@
             </div>
             <div class="modal-body">
                 {% include "classic/lessonform.html" %}
-                <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -82,7 +81,9 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <a href="{% url 'classic:lessonadddate' prefilled_date=day.ymd %}" class="btn btn-success">Add Class</a>
+                <!-- <a href="{% url 'classic:lessonadddate' prefilled_date=day.ymd %}" class="btn btn-success">Add Class</a> -->
+                
+                <button type="button" class="btn btn-success" @click="dismissAndAddClass('{{ day.modalId }}')">Add Class</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -109,9 +110,13 @@
      },
      addClassDay(id) {
        this.lesson.day = id.substr(2);
+       $("#addLessonModal").modal('show');       
+     },
+     dismissAndAddClass(id) {
+       this.lesson.day = id.substr(2);
+       $("#" + id).modal('hide');
        $("#addLessonModal").modal('show');
-       
-     }       
+     },
    },
 
    mounted() {

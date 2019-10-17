@@ -180,6 +180,7 @@ def lessonlist(request):
 
         return render(request, "classic/lessonlist.html",
                       {'activetab': 'lessons',
+                       'hasModal': True,
                        'lessons': lessons,
                        'students': students,
                        'vueLesson': vueLesson})
@@ -534,6 +535,7 @@ def calendarmonth(request, year, month):
                        'prevYear': prevYear,
                        'nextMonth': nextMonth,
                        'nextYear': nextYear,
+                       'hasModal': True,
                        'vueLesson': vueLesson})
     
 
