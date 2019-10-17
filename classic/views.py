@@ -429,8 +429,11 @@ def lessondelete(request, lesson_id):
 
 @login_required
 def profile(request):
+    upcoming_lesssons = Lesson.objects.filter(teacher=request.user, start_at__gte=datetime.now(), start_at__lte=datetime.now() + timedelta(days=15))
+    
     return render(request, "classic/profile.html",
                   {'activetab': 'profile',
+                   'lessons': upcoming_lesssons,
                    'username': request.user.username})
 
 

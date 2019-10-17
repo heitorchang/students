@@ -3,7 +3,37 @@
 {% block content %}
 <h3>{{ username }}'s Profile</h3>
 
-<a href="/accounts/password_change/" class="btn btn-primary">Change My Password</a>
+<a href="/accounts/password_change/" class="btn btn-primary">Change My Password</a> <a href="/accounts/logout/" class="btn btn-secondary float-right">Logout</a>
+
+{% if lessons %}
 <br><br>
-<a href="/accounts/logout/" class="btn btn-secondary">Logout</a>
+<h3>Upcoming Classes (15 days)</h3>
+{% for lesson in lessons %}
+<div class="card mt-3">
+    <div class="card-header">
+        <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
+        <span class="float-right">
+            <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
+        </span>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <b>Student:</b> <a href="{% url 'classic:studentclasses' lesson.student.id %}">{{ lesson.student.name }}</a>
+            
+            {% if lesson.notes %}
+            <br>
+            <b>Notes:</b>
+            <div class="container">
+                <pre>{{ lesson.notes }}</pre>
+            </div>
+            {% else %}
+            <br>(no notes)
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
 {% endblock %}
