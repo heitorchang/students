@@ -455,7 +455,7 @@ def calendarmonth(request, year, month):
                               start_at=start_at,
                               duration=lesson_duration,
                               notes=lesson_notes)
-        return redirect("classic:calendarthismonth")
+        return redirect("classic:calendarmonth", year, month)
 
     else:
         vueLesson = f"""
