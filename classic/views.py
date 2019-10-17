@@ -1,5 +1,5 @@
 from datetime import datetime, date, time, timedelta
-from calendar import monthrange
+from calendar import monthrange, month_name
 from collections import defaultdict
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
@@ -82,9 +82,21 @@ def studentclasses(request, student_id):
     student = Student.objects.get(id=student_id, teacher=request.user)
     upcomingclasses = Lesson.objects.filter(student=student, start_at__gte=datetime.now())
 
+    # generate links for class history (months with at least one class)
+    lessons = Lesson.objects.filter(teacher=request.user,
+                                    student=student)
+
+    monthlinks_set = set()
+    for lesson in lessons:
+        year = lesson.start_at.year
+        month = lesson.start_at.month
+        monthname = month_name[month]
+        monthlinks_set.add((year, month, monthname))
+
     return render(request, "classic/studentclasses.html",
                   {'activetab': 'students',
                    'student': student,
+                   'monthlinks': sorted(monthlinks_set),
                    'upcomingclasses': upcomingclasses})
 
 
@@ -572,3 +584,23 @@ def studentadd(request):
     return render(request, "classic/studentadd.html",
                   {'activetab': 'students',
                    'vueStudent': vueStudent})
+
+
+@login_required
+def studentmonth(request, student_id, year, month):
+    student = Student.objects.get(teacher=request.user, id=student_id)
+    lessons = Lesson.objects.filter(teacher=request.user,
+                                    student=student,
+                                    start_at__gte=datetime(year, month, 1, 0, 0, 0),
+                                    start_at__lte=datetime(year, month, monthrange(year, month)[1], 23, 59, 59))
+
+    headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
+
+    return render(request, "classic/studentmonth.html",
+                  {'activetab': 'students',
+                   'student': student,
+                   'headermonth': headermonth,
+                   'year': year,
+                   'month': month,
+                   'lessons': lessons})
+    

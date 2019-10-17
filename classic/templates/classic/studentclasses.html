@@ -28,24 +28,38 @@
 <div class="container mt-3">
     <h4><b>Upcoming Classes</b></h4>
     
-    <ul>
-        {% for lesson in upcomingclasses %}
-        <li>
-            <a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"D, M. j, g:i A" }}</a>
-            {% if lesson.notes %}
-            <span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap for notes</span>
-            {% endif %}
-        </li>
-        {% endfor %}        
-    </ul>
+    {% for lesson in upcomingclasses %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
+            <span class="float-right">
+                <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
+            </span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {% if lesson.notes %}
+                <b>Notes:</b>
+                <div class="container">
+                    <pre>{{ lesson.notes }}</pre>
+                </div>
+                {% else %}
+                (no notes)
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}        
 </div>
 
 <div class="container mt-3">
-    <h4><b>Class History</b></h4>
+    <h4><b>Class History by Month</b></h4>
 
     <ul>
-        <li>FIXME Sep. 2019</li>
-        <li>Oct. 2019</li>
+        {% for monthlink in monthlinks %}
+        <li><a href="{% url 'classic:studentmonth' student.id monthlink.0 monthlink.1 %}">{{ monthlink.2 }} {{ monthlink.0 }}</a></li>
+        {% endfor %}
     </ul>
 </div>
 

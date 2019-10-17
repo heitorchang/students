@@ -1,5 +1,4 @@
 Backend
-[  ] grep -Iir dummy fixme
 [  ] monthly report of classes
 [OK] load notifications for Monday on Friday
 [OK] check for time conflict when adding a class
@@ -14,8 +13,8 @@ Backend
 
 
 UI
-[  ] studentclasses shows links to months with classes (history)
-[  ] student's classes for a given month (history)
+[OK] student's classes for a given month (history)
+[OK] studentclasses shows links to months with classes (history)
 [OK] sign up page
 [OK] all classes show a table
 [OK] calendar with primary color circles if classes, tap to open classes modal

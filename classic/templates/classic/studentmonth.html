@@ -1,0 +1,71 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>
+    <a href="{% url 'classic:studentclasses' student.id %}">{{ student.name }}</a>,
+    <a href="{% url 'classic:calendarmonth' year month %}">{{ headermonth }}</a>
+</h3>
+
+<a href="{% url 'classic:lessonforstudent' student.id %}" class="btn btn-success">Add Class</a>
+
+
+<div class="container">
+    {% for lesson in lessons %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <b>{{ lesson.start_at }}</b> ({{ lesson.duration }} mins)
+            <span class="float-right">
+                <a href="{% url 'classic:lessondetail' lesson.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'classic:lessonconfirmdelete' lesson.id %}" class="btn btn-danger">Delete</a>
+            </span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {% if lesson.notes %}
+                <b>Notes:</b>
+                <div class="container">
+                    <pre>{{ lesson.notes }}</pre>
+                </div>
+                {% else %}
+                (no notes)
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueLesson|safe }}
+   },
+   
+   methods: {
+     openModal(id) {
+       $("#" + id).modal('show');
+     },
+     addClassDay(id) {
+       this.lesson.day = id.substr(2);
+       $("#addLessonModal").modal('show');       
+     },
+     dismissAndAddClass(id) {
+       this.lesson.day = id.substr(2);
+       $("#" + id).modal('hide');
+       $("#addLessonModal").modal('show');
+     },
+   },
+
+   mounted() {
+     $('[data-toggle="tooltip"]').tooltip();
+   },
+ });
+</script>
+{% endblock %}
+

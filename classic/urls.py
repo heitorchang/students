@@ -19,7 +19,7 @@ urlpatterns = [
     path('students/<int:student_id>/delete/', views.studentdelete, name="studentdelete"),
 
     path('students/add/', views.studentadd, name="studentadd"),
-
+    path('students/<int:student_id>/month/<int:year>/<int:month>/', views.studentmonth, name="studentmonth"),
 
     # Lessons
     path('classes/', views.lessonlist, name="lessonlist"),
