@@ -43,9 +43,12 @@ urlpatterns = [
     path('classes/<int:lesson_id>/delete/', views.lessondelete, name="lessondelete"),
 
     # Calendars for Lessons
-    # This month
+    # This month experimental
     path('classes/thismonth/', views.lessonthismonth, name="lessonthismonth"),
 
+    # Calendars
+    path('calendar/thismonth/', views.calendarthismonth, name="calendarthismonth"),
+    path('calendar/month/<int:year>/<int:month>/', views.calendarmonth, name="calendarmonth"),
     
     # Profile
     path('profile/', views.profile, name="profile"),

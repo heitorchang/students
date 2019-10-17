@@ -1,0 +1,73 @@
+{% extends "classic/base.html" %}
+
+{% block content %}
+<h3>This Month's Classes</h3>
+<h3>DUMMY, do not use</h3>
+
+{{ weeks }}
+
+<table class="table white-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Sun</th>
+            <th scope="col">Mon</th>
+            <th scope="col">Tue</th>
+            <th scope="col">Wed</th>
+            <th scope="col">Thu</th>
+            <th scope="col">Fri</th>
+            <th scope="col">Sat</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>29</td>
+            <td>30</td>
+            <td>1</td>
+            <td>2<br><a href="#">3:15pm</a><br><a href="#">10:15pm</a></td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>7<br><a href="#">7:00am</a><br><a href="#">9:00am</a><br><a href="#">12:10pm</a><br><a href="#">9:00pm</a></td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     
+   },
+ });
+</script>
+{% endblock %}

@@ -1,4 +1,6 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, time, timedelta
+from calendar import monthrange
+from collections import defaultdict
 from django.shortcuts import render, redirect
 from records.models import Student, Lesson, Notification
 from django.contrib.auth.decorators import login_required
@@ -421,3 +423,56 @@ def profile(request):
 @login_required
 def lessonthismonth(request):
     return render(request, "classic/lessonthismonth.html")
+
+
+# Calendar views
+
+@login_required
+def calendarmonth(request, year, month):
+    weekslist = []
+    first = date(year, month, 1)
+    last = date(year, month, monthrange(year, month)[1])
+    firstextras = (first.weekday() + 1) % 7
+    lastextras = 6 - ((last.weekday() + 1) % 7)
+
+    firstcalday = first - timedelta(days=firstextras)
+    lastcalday = last + timedelta(days=lastextras)
+
+    days = (lastcalday - firstcalday).days + 1
+    weeks = days // 7
+    
+    assert firstcalday.weekday() == 6
+    assert lastcalday.weekday() == 5
+
+    startlessons = datetime.combine(firstcalday, time(0, 0, 0))
+    endlessons = datetime.combine(lastcalday, time(23, 59, 59))
+    lessons = Lesson.objects.filter(teacher=request.user, start_at__gte=startlessons, start_at__lte=endlessons)
+    lessonsdict = defaultdict(list)
+    
+    for lesson in lessons:
+        lessonsdict[datetime.strftime(lesson.start_at.date(), "%Y-%m-%d")].append(lesson)
+
+    for i in range(weeks):
+        week = []
+        for d in range(7):
+            daylabel = datetime.strftime(firstcalday, "%d")
+            if daylabel[0] == "0":
+                daylabel = daylabel[1]
+            week.append({'longlabel': datetime.strftime(firstcalday, "%a, %b. %d, %I:%M %p"),
+                         'label': daylabel,
+                         'lessons': lessonsdict[datetime.strftime(firstcalday, "%Y-%m-%d")],})
+            firstcalday += timedelta(days=1)
+        weekslist.append(week[:])
+
+    headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
+    
+    return render(request, "classic/calendarmonth.html",
+                  {'activetab': 'lessons',
+                   'headermonth': headermonth,
+                   'weeks': weekslist})
+
+
+@login_required
+def calendarthismonth(request):
+    today = date.today()
+    return calendarmonth(request, today.year, today.month)
