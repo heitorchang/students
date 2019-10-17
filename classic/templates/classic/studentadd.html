@@ -1,0 +1,28 @@
+{% extends "classic/base.html" %}
+{% load index %}
+
+{% block content %}
+<h3>Add Student</h3>
+
+{% include "classic/studentform.html" %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+ let app = new Vue({
+   el: "#app",
+   data: {
+     {{ vueStudent|safe }}
+   },
+   
+   methods: {
+     
+   },
+
+   mounted() {
+     
+   },
+ });
+</script>
+{% endblock %}

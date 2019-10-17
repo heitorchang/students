@@ -373,7 +373,7 @@ def lessonadd(request, prefilled_date=""):
                                               start_at=start_at,
                                               duration=lesson_duration,
                                               notes=lesson_notes)
-        return redirect("classic:calendarthismonth")
+        return redirect("classic:calendarmonth", start_at.year, start_at.month)
     
     else:
         vueLesson = f"""
@@ -543,3 +543,32 @@ def calendarmonth(request, year, month):
 def calendarthismonth(request):
     today = date.today()
     return calendarmonth(request, today.year, today.month)
+
+
+@login_required
+def studentadd(request):
+    if request.method == "POST":
+        student_teacher = request.user
+        student_name = request.POST['name']
+        student_phone = request.POST['phone']
+        student_email = request.POST['email']
+
+        createdStudent = Student.objects.create(teacher=student_teacher,
+                                                name=student_name,
+                                                phone=student_phone,
+                                                email=student_email)
+        
+        return redirect("classic:studentclasses", createdStudent.id)
+    
+    else:
+        vueStudent = """
+        student: {
+          name: '',
+          phone: '',
+          email: '',
+        }
+        """
+
+    return render(request, "classic/studentadd.html",
+                  {'activetab': 'students',
+                   'vueStudent': vueStudent})

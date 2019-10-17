@@ -1,4 +1,5 @@
 Backend
+[  ] grep -Iir dummy fixme
 [  ] monthly report of classes
 [OK] load notifications for Monday on Friday
 [OK] check for time conflict when adding a class
@@ -12,16 +13,10 @@ Backend
 [NO] idea: to keep track of what dates were downloaded, keep track of dl_begin and dl_end (year/month), and extend these after downloading. NO: not doing SPA
 
 
-Testing
-[  ] grep -Iir dummy fixme
-[  ] Selenium
-
-
 UI
-[  ] sign up page
-[  ] month's classes in cards per day under calendar
 [  ] studentclasses shows links to months with classes (history)
 [  ] student's classes for a given month (history)
+[OK] sign up page
 [OK] all classes show a table
 [OK] calendar with primary color circles if classes, tap to open classes modal
 [OK] student list shows next class as computed property
@@ -31,6 +26,7 @@ UI
 [OK] allow blank fields on submit (defaults are set client-side)
 [OK] modify Bootstrap primary colors (used 3rd-party online tool)
 [OK] add v-cloak to app section tag
+[NO] month's classes in cards per day under calendar
 [NO] prev/next link in monthly component, should download new data
 [NO] get mm for monthly from $parent, not prop
 [NO] block screen while saving JSON

@@ -4,11 +4,12 @@
 <h3>Student Details</h3>
 
 <a href="{% url 'classic:studentlist' %}" class="btn btn-primary">Back to All Students</a>
+<a href="{% url 'classic:studentadd' %}" class="btn btn-success">Add Student</a>
 
 <div class="container mt-3">
     <div class="card mt-3">
         <div class="card-header">
-            <a href="{% url 'classic:studentdetail' student.id %}" class="h4">{{ student.name }}</a>
+            <a href="{% url 'classic:studentdetail' student.id %}" class="h4"><b>{{ student.name }}</b></a>
             <span class="float-right">
                 <a href="{% url 'classic:studentdetail' student.id %}" class="btn btn-primary">Edit</a>
                 <a href="{% url 'classic:studentconfirmdelete' student.id %}" class="btn btn-danger">Delete</a>                
