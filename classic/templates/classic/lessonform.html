@@ -2,7 +2,7 @@
     {% csrf_token %}
 
     <div class="form-group">
-        <label for="lessonStudent">Student <a href="{% url 'classic:studentadd' %}" class="btn btn-success">Add New</a></label>
+        <label for="lessonStudent">Student <a href="{% url 'classic:studentadd' %}" class="btn btn-success">Add Student</a></label>
         <select class="form-control" id="lessonStudent" name="student" v-model="lesson.student" required>
             <option value="">Choose a Student</option>
             {% for student in students %}
