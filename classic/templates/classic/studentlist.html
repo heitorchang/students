@@ -26,7 +26,7 @@ Tap on a name to view classes and details.
             {% if student.phone %} <b>Phone:</b> {{ student.phone }} {% else %} (no phone) {% endif %}<br>
             {% if student.email %} <b>Email:</b> {{ student.email }} {% else %} (no email) {% endif %}<br>
             {% if student.nextLesson %}
-            <b>Next Class:</b> {{ student.nextLesson.start_at|date:"D, M jS, g:i a" }} ({{ student.nextLesson.duration }} mins) {% if lesson.notes %}<span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}"><b>(notes)</b></span>{% endif %}
+            <b>Next Class:</b> {{ student.nextLesson.start_at|date:"D, M jS, g:i a" }} ({{ student.nextLesson.duration }} mins) {% if student.nextLesson.notes %}<span data-toggle="tooltip" data-html="true" title="{{ student.nextLesson.notes }}"><b>(notes)</b></span>{% endif %}
             {% endif %}
         </p>
     </div>
