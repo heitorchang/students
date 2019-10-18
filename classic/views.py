@@ -587,6 +587,7 @@ def calendarmonth(request, year, month):
                        'nextMonth': nextMonth,
                        'nextYear': nextYear,
                        'hasModal': True,
+                       'todayymd': date.today().strftime("%Y-%m-%d"),
                        'studentreport': studentreport,
                        'vueLesson': vueLesson})
     

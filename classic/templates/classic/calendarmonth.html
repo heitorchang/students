@@ -30,7 +30,7 @@
         {% for week in weeks %}
         <tr>
             {% for day in week %}
-            <td>
+            <td{% if day.ymd == todayymd %} class="today"{% endif %}>
                 {% if day.lessons %}
                 <span class="badge badge-primary" @click="openModal('{{ day.modalId }}')">{{ day.label }}</span>
                 {% else %}
