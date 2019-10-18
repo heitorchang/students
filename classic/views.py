@@ -574,7 +574,8 @@ def calendarmonth(request, year, month):
 
         # monthly report
         studentreport = monthlyreport(request, year, month)
-        
+        page_loaded = datetime.now()
+
         return render(request, "classic/calendarmonth.html",
                       {'activetab': 'lessons',
                        'lessons': lessons,
@@ -588,6 +589,7 @@ def calendarmonth(request, year, month):
                        'nextYear': nextYear,
                        'hasModal': True,
                        'studentreport': studentreport,
+                       'page_loaded': page_loaded,
                        'vueLesson': vueLesson})
     
 
