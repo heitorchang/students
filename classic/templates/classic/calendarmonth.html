@@ -76,7 +76,7 @@ Page loaded on {{ page_loaded }}
             <div class="modal-body">
                 <ul>
                     {% for lesson in day.lessons %}
-                    <li><a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"g:i A" }} {{ lesson.student.name }}, {{ lesson.duration }} mins</a> {% if lesson.notes %}<span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}"><b>(notes)</b></span>{% endif %}</li>
+                    <li><a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"g:i A" }} {{ lesson.student.name }}, {{ lesson.duration }} mins</a> {% if lesson.notes %}<span data-toggle="tooltip" title="{{ lesson.notes }}"><b>(notes)</b></span>{% endif %}</li>
                     
                     {% endfor %}
                 </ul>

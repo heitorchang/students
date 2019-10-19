@@ -24,7 +24,7 @@
                 <td><a href="{% url 'classic:studentclasses' lesson.student.id %}">{{ lesson.student.name }}</a></td>
                 <td><a href="{% url 'classic:lessoncard' lesson.id %}">{{ lesson.start_at|date:"D, M. j, 'y, g:i A" }}</a></td>
                 <td>{{ lesson.duration }} mins</td>
-                <td>{% if lesson.notes %}<span data-toggle="tooltip" data-html="true" title="{{ lesson.notes }}">tap for notes</span>{% endif %}</td>
+                <td>{% if lesson.notes %}<span data-toggle="tooltip" title="{{ lesson.notes }}">tap for notes</span>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>
