@@ -6,8 +6,7 @@ from datetime import datetime, date, time
 
 
 def format_lesson_time(t):
-    # return timezone.localtime(t).strftime("%d/%m/%Y %H:%M")
-    return t
+    return t.strftime("%a %d/%m/%Y %H:%M")
 
 
 class Student(models.Model):
