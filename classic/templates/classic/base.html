@@ -206,7 +206,7 @@
             <h3>New Notifications</h3>
             Tap to dismiss
             {% for notification in notifications %}
-            <div class="alert alert-warning fade show" id="notification{{ notification.id }}" onclick="dismissNotification({{ notification.id }});">{{ notification.message }}</div>
+            <div class="alert alert-warning fade show" id="notification{{ notification.id }}" onclick="dismissNotification({{ notification.id }});">{{ notification.message|safe }}</div>
             {% endfor %}
         </div>
 

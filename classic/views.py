@@ -230,6 +230,9 @@ def lessondetail(request, lesson_id):
         lesson.start_at = new_start_at
         lesson.duration = new_duration
         lesson.notes = new_notes
+
+        # Reset notified because a postponed class needs a new notification
+        lesson.notified = False
         lesson.save()
         
         return redirect("classic:calendarthismonth")

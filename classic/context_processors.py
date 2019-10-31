@@ -6,11 +6,17 @@ def notifications_processor(request):
 
     now = datetime.now()
     today = date.today()
-    weekday = today.weekday()
-    if weekday == 4:
-        days_diff = 4
-    else:
-        days_diff = 2
+
+    # DISABLED--seems confusing to have different behavior
+    # On Fridays, get notified for the weekend and next Monday
+    #
+    # weekday = today.weekday()
+    # if weekday == 4:
+    #     days_diff = 4
+    # else:
+
+    # Get notified for classes on the next day
+    days_diff = 2
 
     end_day = today + timedelta(days=days_diff)
     end_datetime = datetime.combine(end_day, time(0, 0))
@@ -18,13 +24,19 @@ def notifications_processor(request):
     if request.user.is_authenticated:
         lessons = Lesson.objects.filter(teacher=request.user, notified=False, start_at__gte=now, start_at__lt=end_datetime)
 
+        # Combine all classes into one message
+        messages = ""
+
         for lesson in lessons:
             lesson.notified = True
             lesson.save()
             lesson_start_at = datetime.strftime(lesson.start_at, "%a, %b. %d, %I:%M %p")
+            messages += f"{lesson.student.name}'s class on {lesson_start_at}<br>"
+
+        if messages != "":
             Notification.objects.create(teacher=request.user,
-                                        message=f"{lesson.student.name}'s class on {lesson_start_at}",
-                                        due_at=lesson.start_at)
+                                        message=messages,
+                                        due_at=end_datetime)
             
         notifications = Notification.objects.filter(teacher=request.user, is_new=True)
         return {'notifications': notifications}
