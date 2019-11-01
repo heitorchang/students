@@ -642,11 +642,22 @@ def studentmonth(request, student_id, year, month):
 
     headermonth = datetime.strftime(date(year, month, 1), "%B %Y")
 
+    # generate links for class history (months with at least one class)
+    all_lessons = Lesson.objects.filter(teacher=request.user,
+                                        student=student)
+    monthlinks_set = set()
+    for lesson in all_lessons:
+        year = lesson.start_at.year
+        month = lesson.start_at.month
+        monthname = month_name[month]
+        monthlinks_set.add((year, month, monthname))
+
     return render(request, "classic/studentmonth.html",
                   {'activetab': 'students',
                    'student': student,
                    'headermonth': headermonth,
                    'year': year,
                    'month': month,
+                   'monthlinks': sorted(monthlinks_set),
                    'lessons': lessons})
     

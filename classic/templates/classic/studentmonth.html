@@ -33,6 +33,17 @@
         </div>
     </div>
     {% endfor %}
+
+    <div class="container mt-3">
+        <h4><b>Class History by Month</b></h4>
+
+        <ul>
+            {% for monthlink in monthlinks %}
+            <li><a href="{% url 'classic:studentmonth' student.id monthlink.0 monthlink.1 %}">{{ monthlink.2 }} {{ monthlink.0 }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </div>
 
 {% endblock %}
