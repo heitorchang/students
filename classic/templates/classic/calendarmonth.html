@@ -31,11 +31,18 @@ Page loaded on {{ page_loaded }}
         {% for week in weeks %}
         <tr>
             {% for day in week %}
-            <td{% if day.ymd == todayymd %} class="today"{% endif %}>
+            <td
+              {% if day.ymd == todayymd %} class="today"{% endif %}
+              {% if day.lessons %}
+              @click="openModal('{{ day.modalId }}')"
+              {% else %}
+              @click="addClassDay('{{ day.modalId }}')"
+              {% endif %}
+            >
                 {% if day.lessons %}
-                <span class="badge badge-primary" @click="openModal('{{ day.modalId }}')">{{ day.label }}</span>
+                <span class="badge badge-primary">{{ day.label }}</span>
                 {% else %}
-                <span class="badge badge-light" @click="addClassDay('{{ day.modalId }}')">{{ day.label }}</span>
+                <span class="badge badge-light">{{ day.label }}</span>
                 {% endif %}
             </td>
             {% endfor %}
