@@ -13,7 +13,17 @@
     <tbody>
         {% for student in studentreport %}
         <tr>
-            <td><a href="{% url 'classic:studentclasses' student.id %}"><b>{{ student.name }}</b></a></td>
+            <td>
+                {% if student.id > 0 %}
+                <a href="{% url 'classic:studentclasses' student.id %}">
+                    {% endif %}
+                    
+                    <b>{{ student.name }}</b>
+                    
+                    {% if student.id > 0 %}
+                </a>
+                {% endif %}
+            </td>
             <td>{{ student.completed }}</td>
             <td>{{ student.upcoming }}</td>
             <td><b>{{ student.total }}</b></td>

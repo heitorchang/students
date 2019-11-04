@@ -455,6 +455,10 @@ def monthlyreport(request, year, month):
 
     now = datetime.now()
 
+    totalcompleted = 0
+    totalupcoming = 0
+    totaltotal = 0
+
     studentdict = {student.id: {"name": student.name,
                                 "id": student.id,
                                 "completed": 0,
@@ -464,12 +468,21 @@ def monthlyreport(request, year, month):
     
     for lesson in lessons:
         studentdict[lesson.student.id]['total'] += 1
+        totaltotal += 1
         if lesson.start_at <= now:
             studentdict[lesson.student.id]['completed'] += 1
+            totalcompleted += 1
         else:
             studentdict[lesson.student.id]['upcoming'] += 1
+            totalupcoming += 1
 
     filtered = sorted((v for (k, v) in studentdict.items() if (v['completed'] + v['upcoming']) > 0), key=itemgetter('name'))
+
+    filtered.append({"name": "Total",
+                     "id": -1,
+                     "completed": totalcompleted,
+                     "upcoming": totalupcoming,
+                     "total": totaltotal})
     
     return filtered
 
