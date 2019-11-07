@@ -9,6 +9,22 @@ def format_lesson_time(t):
     return t.strftime("%a %d/%m/%Y %H:%M")
 
 
+def format_confirmation_time(t):
+    return t.strftime("%a %d/%m %I:%M %p")
+
+
+class Confirmation(models.Model):
+    teacher = models.ForeignKey(User, related_name="records_confirmations", on_delete=models.CASCADE)
+    message = models.CharField(max_length=255)
+    is_new = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['teacher', '-id']
+
+    def __str__(self):
+        return self.message
+
+    
 class Student(models.Model):
     teacher = models.ForeignKey(User, related_name="records_students", on_delete=models.CASCADE)
     name = models.CharField(max_length=80)
@@ -33,7 +49,17 @@ class Lesson(models.Model):
     duration = models.IntegerField(default=60)
     notes = models.TextField(blank=True)
     notified = models.BooleanField(default=False)
-    
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        Confirmation.objects.create(teacher=self.teacher, message="{}'s {} class saved successfully".format(self.student.name, format_lesson_time(self.start_at)))
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        Confirmation.objects.create(teacher=self.teacher, message="{}'s {} class deleted successfully".format(self.student.name, format_lesson_time(self.start_at)))
+
+        
+        
     class Meta:
         ordering = ['teacher', 'start_at']
         
@@ -53,3 +79,4 @@ class Notification(models.Model):
 
     def __str__(self):
         return "{} due {} {}".format(self.message, format_lesson_time(self.due_at), "[unread]" if self.is_new else "")
+

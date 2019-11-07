@@ -201,6 +201,17 @@
                 </a>
             </li>
         </ul>
+
+        {% if confirmations %}
+        <br>
+        {% for confirmation in confirmations %}
+        <div class="alert alert-success fade show" style="position: fixed; top: 0; right: 0;" id="confirmation" onclick="dismissConfirmation();">
+            {{ confirmation.message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        
         {% if notifications %}
         <div class="container">
             <h3>New Notifications</h3>
@@ -211,13 +222,13 @@
         </div>
 
         <!--
-        <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 5px; left: 5px; min-height: 50px;">            
-            <div class="toast" id="notificationFailToast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body">
-                    Could not dismiss notification.<br>Please try again later.
-                </div>
-            </div>
-        </div>
+             <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 5px; left: 5px; min-height: 50px;">            
+             <div class="toast" id="notificationFailToast" role="alert" aria-live="assertive" aria-atomic="true">
+             <div class="toast-body">
+             Could not dismiss notification.<br>Please try again later.
+             </div>
+             </div>
+             </div>
         -->
 
         <!-- Error Modal -->
@@ -265,7 +276,7 @@
            },
 
            mounted() {
-             
+
            },
          });
         </script>
@@ -291,6 +302,10 @@
            return cookieValue;
          }
          var csrftoken = getCookie('csrftoken');
+
+         function dismissConfirmation() {
+           $("#confirmation").alert('close');
+         }
          
          function dismissNotification(id) {           
            $.ajax({
@@ -309,6 +324,13 @@
               $("#errorModal").modal('show');
             })
          }
+
+         $(document).ready(function() {
+           window.setTimeout(function() {
+             dismissConfirmation();
+           }, 2000);
+         });
+
         </script>
     </body>
 </html>

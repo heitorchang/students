@@ -1,5 +1,5 @@
 from datetime import datetime, date, time, timedelta
-from records.models import Lesson, Notification
+from records.models import Lesson, Notification, Confirmation
 
 def notifications_processor(request):
     """Get notifications for next day's classes or Monday when Friday"""
@@ -39,5 +39,16 @@ def notifications_processor(request):
                                         due_at=end_datetime)
             
         notifications = Notification.objects.filter(teacher=request.user, is_new=True)
-        return {'notifications': notifications}
-    return {'notifications': []}
+        confirmations = Confirmation.objects.filter(teacher=request.user, is_new=True)
+
+        for c in confirmations:
+            c.is_new = False
+            c.save()
+
+        confirmations = confirmations[:1]
+        
+        return {'notifications': notifications,
+                'confirmations': confirmations}
+    
+    return {'notifications': [],
+            'confirmations': []}
