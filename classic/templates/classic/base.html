@@ -205,7 +205,7 @@
         {% if confirmations %}
         <br>
         {% for confirmation in confirmations %}
-        <div class="alert alert-success fade show" style="position: fixed; top: 0; right: 0;" id="confirmation" onclick="dismissConfirmation();">
+        <div class="alert alert-success fade show" style="position: fixed; bottom: 0; right: 0;" id="confirmation" onclick="dismissConfirmation();">
             {{ confirmation.message }}
         </div>
         {% endfor %}
